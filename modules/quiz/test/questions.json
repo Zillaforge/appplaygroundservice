@@ -1,0 +1,104 @@
+{
+   "questions":[
+      {
+         "label":"{{ .flavor_label }}",
+         "description":"{{ .flavor_description }}",
+         "type":"vpsFlavor",
+         "variable":"flavor_id",
+         "group":"hardware",
+         "required":true,
+         "default":"",
+         "order": 0
+      },
+      {
+         "label":"{{ .network_label }}",
+         "description":"{{ .network_description }}",
+         "type":"vpsNetwork",
+         "variable":"network_id",
+         "group":"network",
+         "required":true,
+         "default":"",
+         "order": 0
+      },
+      {
+         "label":"{{ .security_group_label }}",
+         "description":"{{ .security_group_description }}",
+         "type":"vpsSecurityGroups",
+         "variable":"security_group_ids",
+         "group":"security_group",
+         "required":true,
+         "default":[],
+         "order": 0
+      },
+      {
+         "label":"{{ .keypair_label }}",
+         "description":"{{ .keypair_description }}",
+         "type":"vpsKeypair",
+         "variable":"ssh_key_pair",
+         "group":"authentication",
+         "required":true,
+         "default":"",
+         "order": 0
+      },
+      {
+         "label":"{{ .password_label }}",
+         "description":"{{ .password_description }}",
+         "type":"password",
+         "variable":"password",
+         "group":"authentication",
+         "required":true,
+         "default":"",
+         "order": 0
+      },
+      {
+         "label":"{{ .compute_node_count_label }}",
+         "description":"{{ .compute_node_count_description }}",
+         "type":"int",
+         "variable":"compute_node_count",
+         "group":"hardware",
+         "required":false,
+         "default":"2",
+         "order": 0
+      },
+      {
+         "label":"{{ .login_node_count_label }}",
+         "description":"{{ .login_node_count_description }}",
+         "type":"int",
+         "variable":"login_node_count",
+         "group":"hardware",
+         "required":false,
+         "default":"2",
+         "order": 1
+      },
+      {
+         "label":"{{ .bgfs_volume_1_label }}",
+         "description":"{{ .bgfs_volume_1_description }}",
+         "type":"vpsVolume",
+         "variable":"bgfs_volume_1",
+         "group":"storage",
+         "required":true,
+         "default":"",
+         "order": 0
+      },
+      {
+         "label":"{{ .bgfs_volume_2_label }}",
+         "description":"{{ .bgfs_volume_2_description }}",
+         "type":"vpsVolume",
+         "variable":"bgfs_volume_2",
+         "group":"storage",
+         "required":true,
+         "default":"",
+         "order": 1
+      },
+      {
+         "label":"",
+         "description":"",
+         "type":"vpsBootVolume",
+         "variable":"boot_volume_id",
+         "group":"not_exposed",
+         "required":false,
+         "default":"",
+         "order": 0
+      }
+   ]
+}

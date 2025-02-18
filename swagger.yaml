@@ -1,0 +1,2321 @@
+openapi: 3.0.0
+info:
+  title: App Playground Service RESTful API
+  description: ASUS Enterprise App Playground Service 以 Portal 需求列出其需要的 Restful API Response 以 Json 格式呈現
+  version: 1.0.0
+  termsOfService: "http://0.0.0.0:8111"
+  contact:
+    email: "ocis_admin@asus.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+servers:
+  - url: http://127.0.0.1:8111/aps/api/v1/
+    description: local develop environment
+tags:
+  - name: "User/ModuleCategory"
+    description: "ModuleCategory RESTful APIs"
+  - name: "User/Module"
+    description: "Module RESTful APIs"
+  - name: "User/Application"
+    description: "Application RESTful APIs"
+  - name: "User/Instance"
+    description: "Instance RESTful APIs"
+  - name: "Admin/ModuleCategory"
+    description: "ModuleCategory RESTful APIs"
+  - name: "Admin/Module"
+    description: "Module RESTful APIs"
+  - name: "Admin/ModuleACL"
+    description: "ModuleACL RESTful APIs"
+  - name: "Admin/Application"
+    description: "Application RESTful APIs"
+  - name: "Admin/Instance"
+    description: "Instance RESTful APIs"
+
+paths:
+##
+#
+#   User RESTful API
+#
+##
+## Module Category API
+  '/project/{project-id}/module-categories':
+    get:
+      summary: 列出所有的 Module Categories
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/ModuleCategory"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listModuleCategoriesOutput'
+              examples:
+                listModuleCategoriesOutput:
+                  $ref: '#/components/examples/listModuleCategoriesOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/module-category/{module-category-id}':
+    get:
+      summary: 取得指定的 Module Category
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/ModuleCategory"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/path.moduleCategoryID'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getModuleCategoryOutput'
+              examples:
+                getModuleCategoryOutput:
+                  $ref: '#/components/examples/getModuleCategoryOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## Module API
+  '/project/{project-id}/module-category/{module-category-id}/modules':
+    get:
+      summary: 列出指定 ModuleCategory 下所有的 Modules
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Module"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/path.moduleCategoryID'
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - $ref: '#/components/parameters/header.xLanguage'
+      responses:
+        '200':
+          description: "OK"
+          headers:
+            Content-Language:
+              schema:
+                $ref: '#/components/schemas/enum.language'
+              description: "語言"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listModulesOutput'
+              examples:
+                listModulesOutput:
+                  $ref: '#/components/examples/listModulesOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/module/{module-id}':
+    get:
+      summary: 取得指定的 Module
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Module"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/path.moduleID'
+        - $ref: '#/components/parameters/header.xLanguage'
+      responses:
+        '200':
+          description: "OK"
+          headers:
+            Content-Language:
+              schema:
+                $ref: '#/components/schemas/enum.language'
+              description: "語言"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getModuleOutput'
+              examples:
+                getModuleOutput:
+                  $ref: '#/components/examples/getModuleOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## Application API
+  '/project/{project-id}/applications':
+    get:
+      summary: 列出所有的 Applications
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Application"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：state
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listApplicationsOutput'
+              examples:
+                listApplicationsOutput:
+                  $ref: '#/components/examples/listApplicationsOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/application/{application-id}':
+    get:
+      summary: 取得指定的 Application
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Application"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/path.applicationID'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationOutput'
+              examples:
+                getApplicationOutput:
+                  $ref: '#/components/examples/getApplicationOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+    delete:
+      summary: 刪除指定的 Application
+      security:
+        - bearerAuth: []
+      tags:
+      - "User/Application"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/path.applicationID'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/application':
+    post:
+      summary: 創建 Application
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Application"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createApplicationInput'
+            examples:
+              createApplicationInput:
+                $ref: '#/components/examples/createApplicationInput'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createApplicationOutput'
+              examples:
+                createApplicationOutput:
+                  $ref: '#/components/examples/createApplicationOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/application/{application-id}/approve':
+    post:
+      summary: 核准指定的 Application
+      description: |
+        此功能會將 Application 的狀態從 Review 改為 Processing，只有 Tenant Admin 可以使用此功能
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Application"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/path.applicationID'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/approveApplicationOutput'
+              examples:
+                approveApplicationOutput:
+                  $ref: '#/components/examples/approveApplicationOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/application/{application-id}/reject':
+    post:
+      summary: 拒絕指定的 Application
+      description: |
+        此功能會將 Application 的狀態從 Review 改為 Reject Tenant Admin 可以使用此功能
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Application"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/path.applicationID'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rejectApplicationOutput'
+              examples:
+                rejectApplicationOutput:
+                  $ref: '#/components/examples/rejectApplicationOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/application/{application-id}/logs':
+    get:
+      summary: 取得指定的 Application logs
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Application"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/path.applicationID'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAppLogsOutput'
+              examples:
+                getApplicationOutput:
+                  $ref: '#/components/examples/getAppLogsOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+
+## Instance API
+  '/project/{project-id}/instances':
+    get:
+      summary: 列出所有的 Instances
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Instance"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：application-id
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listInstancesOutput'
+              examples:
+                listInstancesOutput:
+                  $ref: '#/components/examples/listInstancesOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/instance/{instance-id}':
+    get:
+      summary: 取得指定的 Instance
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Instance"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/path.instanceID'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getInstanceOutput'
+              examples:
+                getInstanceOutput:
+                  $ref: '#/components/examples/getInstanceOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      summary: 更新指定的 Instance
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Instance"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/path.instanceID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateInstanceInput'
+            examples:
+              updateInstanceInput:
+                $ref: '#/components/examples/updateInstanceInput'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateInstanceOutput'
+              examples:
+                updateInstanceOutput:
+                  $ref: '#/components/examples/updateInstanceOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/instance/{instance-id}/floatingip/associate':
+    post:
+      summary: 指派 Floating Ip ID 給指定的 Instance
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Instance"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/path.instanceID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/associateFloatingIpInput'
+            examples:
+              associateFloatingIpInput:
+                $ref: '#/components/examples/associateFloatingIpInput'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/associateFloatingIpOutput'
+              examples:
+                associateFloatingIpOutput:
+                  $ref: '#/components/examples/associateFloatingIpOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 將已指派給指定 Instance 的 Floating Ip ID 回收
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Instance"
+      parameters:
+        - $ref: '#/components/parameters/path.projectID'
+        - $ref: '#/components/parameters/path.instanceID'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/disassociateFloatingIpOutput'
+              examples:
+                disassociateFloatingIpOutput:
+                  $ref: '#/components/examples/disassociateFloatingIpOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+##
+#
+#   Admin RESTful APIs
+#
+##
+## Module Category Admin API
+  '/admin/module-categories':
+    get:
+      summary: 列出所有的 Module Categories
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/ModuleCategory"
+      parameters:
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listModuleCategoriesOutput'
+              examples:
+                listModuleCategoriesOutput:
+                  $ref: '#/components/examples/listModuleCategoriesOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/module-category/{module-category-id}':
+    get:
+      summary: 取得指定的 Module Category
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/ModuleCategory"
+      parameters:
+        - $ref: '#/components/parameters/path.moduleCategoryID'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getModuleCategoryOutput'
+              examples:
+                getModuleCategoryOutput:
+                  $ref: '#/components/examples/getModuleCategoryOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      summary: 更新指定的 Module Category
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/ModuleCategory"
+      parameters:
+        - $ref: '#/components/parameters/path.moduleCategoryID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateModuleCategoryInput'
+            examples:
+              updateModuleCategoryInput:
+                $ref: '#/components/examples/updateModuleCategoryInput'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateModuleCategoryOutput'
+              examples:
+                updateModuleCategoryOutput:
+                  $ref: '#/components/examples/updateModuleCategoryOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 刪除指定的 Module Category
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/ModuleCategory"
+      parameters:
+        - $ref: '#/components/parameters/path.moduleCategoryID'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/module-category/':
+    post:
+      summary: 建立 Module Category
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/ModuleCategory"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createModuleCategoryInput'
+            examples:
+              createModuleCategoryInput:
+                $ref: '#/components/examples/createModuleCategoryInput'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createModuleCategoryOutput'
+              examples:
+                createModuleCategoryOutput:
+                  $ref: '#/components/examples/createModuleCategoryOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+## Module Admin API
+  '/admin/modules':
+    get:
+      summary: 列出所有的 Modules
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Module"
+      parameters:
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - $ref: '#/components/parameters/header.xLanguage'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：module-category-id
+      responses:
+        '200':
+          description: "OK"
+          headers:
+            Content-Language:
+              schema:
+                $ref: '#/components/schemas/enum.language'
+              description: "語言"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listModulesOutput.admin'
+              examples:
+                listModulesOutput:
+                  $ref: '#/components/examples/listModulesOutput.admin'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/module/{module-id}':
+    get:
+      summary: 取得指定的 Module
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Module"
+      parameters:
+        - $ref: '#/components/parameters/path.moduleID'
+        - $ref: '#/components/parameters/header.xLanguage'
+      responses:
+        '200':
+          description: "OK"
+          headers:
+            Content-Language:
+              schema:
+                $ref: '#/components/schemas/enum.language'
+              description: "語言"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getModuleOutput.admin'
+              examples:
+                getModuleOutput:
+                  $ref: '#/components/examples/getModuleOutput.admin'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      summary: 更新指定的 Module
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Module"
+      parameters:
+        - $ref: '#/components/parameters/path.moduleID'
+        - $ref: '#/components/parameters/header.xLanguage'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateModuleInput.admin'
+            examples:
+              updateModuleInput:
+                $ref: '#/components/examples/updateModuleInput.admin'
+      responses:
+        '200':
+          description: "OK"
+          headers:
+            Content-Language:
+              schema:
+                $ref: '#/components/schemas/enum.language'
+              description: "語言"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateModuleOutput.admin'
+              examples:
+                updateModuleOutput:
+                  $ref: '#/components/examples/updateModuleOutput.admin'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 刪除指定的 Module
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Module"
+      parameters:
+        - $ref: '#/components/parameters/path.moduleID'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/module':
+    post:
+      summary: 創建 Module
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Module"
+      parameters:
+        - $ref: '#/components/parameters/header.xLanguage'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createModuleInput.admin'
+            examples:
+              createModuleInput:
+                $ref: '#/components/examples/createModuleInput.admin'
+      responses:
+        '200':
+          description: "OK"
+          headers:
+            Content-Language:
+              schema:
+                $ref: '#/components/schemas/enum.language'
+              description: "語言"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createModuleOutput.admin'
+              examples:
+                createModuleOutput:
+                  $ref: '#/components/examples/createModuleOutput.admin'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## ModuleACL Admin API
+  '/admin/module/{module-id}/acl':
+    get:
+      summary: 取得指定的 Module ACL
+      description: |
+        此功能會取得指定 Module 的存取控制資訊。若 Module 非公開時，列出哪些 Project 可以使用此 Module。
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/ModuleACL"
+      parameters:
+        - $ref: '#/components/parameters/path.moduleID'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getModuleACLOutput.admin'
+              examples:
+                getModuleACLOutput:
+                  $ref: '#/components/examples/getModuleACLOutput.admin'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      summary: 更新特定的 Module ACL
+      description: |
+        此功能可設定指定 Module 的存取控制資訊。若 Module 非公開時，設定哪些 Project 可以使用此 Module。
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/ModuleACL"
+      parameters:
+        - $ref: '#/components/parameters/path.moduleID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateModuleACLInput.admin'
+            examples:
+              updateModuleACLInput:
+                $ref: '#/components/examples/updateModuleACLInput.admin'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateModuleACLOutput.admin'
+              examples:
+                updateModuleACLOutput:
+                  $ref: '#/components/examples/updateModuleACLOutput.admin'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## Application Admin API
+  '/admin/applications':
+    get:
+      summary: 列出所有的 Applications
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Application"
+      parameters:
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：state
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listApplicationsOutput'
+              examples:
+                listApplicationsOutput:
+                  $ref: '#/components/examples/listApplicationsOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/application/{application-id}':
+    get:
+      summary: 取得指定的 Application
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Application"
+      parameters:
+        - $ref: '#/components/parameters/path.applicationID'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getApplicationOutput'
+              examples:
+                getApplicationOutput:
+                  $ref: '#/components/examples/getApplicationOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 刪除指定的 Application
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Application"
+      parameters:
+        - $ref: '#/components/parameters/path.applicationID'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/application':
+    post:
+      summary: 創建 Application
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Application"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createApplicationInput.admin'
+            examples:
+              createApplicationInput:
+                $ref: '#/components/examples/createApplicationInput.admin'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createApplicationOutput'
+              examples:
+                createApplicationOutput:
+                  $ref: '#/components/examples/createApplicationOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/application/{application-id}/logs':
+    get:
+      summary: 取得指定的 Application logs
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Application"
+      parameters:
+        - $ref: '#/components/parameters/path.applicationID'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAppLogsOutput'
+              examples:
+                getApplicationOutput:
+                  $ref: '#/components/examples/getAppLogsOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## Instance Admin API
+  '/admin/instances':
+    get:
+      summary: 列出所有的 Instances
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Instance"
+      parameters:
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：application-id
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listInstancesOutput'
+              examples:
+                listInstancesOutput:
+                  $ref: '#/components/examples/listInstancesOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/instance/{instance-id}':
+    get:
+      summary: 取得指定的 Instance
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Instance"
+      parameters:
+        - $ref: '#/components/parameters/path.instanceID'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getInstanceOutput'
+              examples:
+                getInstanceOutput:
+                  $ref: '#/components/examples/getInstanceOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      summary: 更新指定的 Instance
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Instance"
+      parameters:
+        - $ref: '#/components/parameters/path.instanceID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateInstanceInput'
+            examples:
+              updateInstanceInput:
+                $ref: '#/components/examples/updateInstanceInput'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateInstanceOutput'
+              examples:
+                getInstanceOutput:
+                  $ref: '#/components/examples/updateInstanceOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/instance/{instance-id}/floatingip/associate':
+    post:
+      summary: 指派 Floating Ip ID 給指定的 Instance
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Instance"
+      parameters:
+        - $ref: '#/components/parameters/path.instanceID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/associateFloatingIpInput'
+            examples:
+              associateFloatingIpInput:
+                $ref: '#/components/examples/associateFloatingIpInput'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/associateFloatingIpOutput'
+              examples:
+                associateFloatingIpOutput:
+                  $ref: '#/components/examples/associateFloatingIpOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 將已指派給指定 Instance 的 Floating Ip ID 回收
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Instance"
+      parameters:
+        - $ref: '#/components/parameters/path.instanceID'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/disassociateFloatingIpOutput'
+              examples:
+                disassociateFloatingIpOutput:
+                  $ref: '#/components/examples/disassociateFloatingIpOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+components:
+  ##
+  #
+  # SecuritySchemes
+  #
+  ##
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  ##
+  #
+  # Parameters
+  #
+  ##
+  parameters:
+    path.projectID:
+      in: path
+      name: project-id
+      schema:
+        type: string
+      required: true
+      description: "Project ID"
+    path.moduleCategoryID:
+      in: path
+      name: module-category-id
+      schema:
+        type: string
+      required: true
+      description: "Module Category ID"
+    path.moduleID:
+      in: path
+      name: module-id
+      schema:
+        type: string
+      required: true
+      description: "Module ID"
+    path.applicationID:
+      in: path
+      name: application-id
+      schema:
+        type: string
+      required: true
+      description: "Application ID"
+    path.instanceID:
+      in: path
+      name: instance-id
+      schema:
+        type: string
+      required: true
+      description: "Instance ID"
+    query.limit:
+      in: query
+      name: limit
+      schema:
+        type: integer
+        minimum: -1
+        default: 100
+      required: false
+      description: "-1表示全部顯示"
+    query.offset:
+      in: query
+      name: offset
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+      required: false
+      description: "從第幾筆開始取得"
+    header.xLanguage:
+      in: header
+      name: X-Language
+      schema:
+        $ref: '#/components/schemas/enum.language'
+      required: false
+      description: "指定回應語言"
+
+##
+#
+# Schemas
+##
+  schemas:
+    enum.language:
+      type: string
+      enum:
+        - "zh-TW"
+        - "en-US"
+      default: "zh-TW"
+
+    moduleCategory:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        creator:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            account:
+              type: string
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+        updatedAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+
+    listModuleCategoriesOutput:
+      type: object
+      properties:
+        moduleCategories:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/moduleCategory'
+            - type: object
+              properties:
+                moduleCount:
+                  type: integer
+        total:
+          type: integer
+
+    getModuleCategoryOutput:
+      $ref: '#/components/schemas/moduleCategory'
+
+    createModuleCategoryInput:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        creatorId:
+          type: string
+          format: uuid
+
+    createModuleCategoryOutput:
+      $ref: '#/components/schemas/moduleCategory'
+
+    updateModuleCategoryInput:
+      type: object
+      properties:
+        description:
+          type: string
+
+    updateModuleCategoryOutput:
+      $ref: '#/components/schemas/moduleCategory'
+
+    module:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        state:
+          type: string
+        questions:
+          type: object
+          # dynamic properties
+        moduleCategory:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        creator:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            account:
+              type: string
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+        updatedAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+
+    listModulesOutput:
+      type: object
+      properties:
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/module'
+        total:
+          type: integer
+
+    getModuleOutput:
+      $ref: '#/components/schemas/module'
+
+    module.admin:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        state:
+          type: string
+        questions:
+          type: object
+          # dynamic properties
+        location:
+          type: string
+        public:
+          type: boolean
+        moduleCategory:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        creator:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            account:
+              type: string
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+        updatedAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+
+    listModulesOutput.admin:
+      type: object
+      properties:
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/module.admin'
+        total:
+          type: integer
+
+    getModuleOutput.admin:
+      $ref: '#/components/schemas/module.admin'
+
+    updateModuleInput.admin:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        public:
+          type: boolean
+    
+    updateModuleOutput.admin:
+      $ref: '#/components/schemas/module.admin'
+
+    createModuleInput.admin:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        moduleCategoryId:
+          type: string
+          format: uuid
+        creatorId:
+          type: string
+          format: uuid
+
+    createModuleOutput.admin:
+      $ref: '#/components/schemas/module.admin'
+
+    getModuleACLOutput.admin:
+      type: object
+      properties:
+        moduleID:
+          type: string
+          format: uuid
+        projectIDs:
+          type: array
+          items:
+            type: string
+
+    updateModuleACLInput.admin:
+      type: object
+      properties:
+        projectIDs:
+          type: array
+          items:
+            type: string
+
+    updateModuleACLOutput.admin:
+      type: object
+      properties:
+        moduleID:
+          type: string
+          format: uuid
+        projectIDs:
+          type: array
+          items:
+            type: string
+
+    application:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        state:
+          type: string
+        answers:
+          type: object
+          # dynamic properties
+        module:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        moduleCategory:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        namespace:
+          type: string
+        projectID:
+          type: string
+        creator:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            account:
+              type: string
+        updater:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            account:
+              type: string
+        extra:
+          type: object
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+        updatedAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+
+    listApplicationsOutput:
+      type: object
+      properties:
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/application'
+        total:
+          type: integer
+
+    getApplicationOutput:
+      $ref: '#/components/schemas/application'
+
+    createApplicationInput:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        answers:
+          type: object
+        moduleId:
+          type: string
+          format: uuid
+
+    createApplicationInput.admin:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        answers:
+          type: object
+        moduleId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        namespace:
+          type: string
+        creatorId:
+          type: string
+          format: uuid
+
+    createApplicationOutput:
+      $ref: '#/components/schemas/application'
+
+    approveApplicationOutput:
+      $ref: '#/components/schemas/application'
+
+    rejectApplicationOutput:
+      $ref: '#/components/schemas/application'
+
+    getAppLogsOutput:
+      type: object
+      properties:
+        logs:
+          type: string
+
+    instance:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        application:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        projectId:
+          type: string
+          format: uuid
+        referenceId:
+          type: string
+        extra:
+          type: object
+        floatingIpId:
+          type: string
+          format: uuid
+        floatingIpAddress:
+          type: string  
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+        updatedAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+
+    listInstancesOutput:
+      type: object
+      properties:
+        instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/instance'
+        total:
+          type: integer
+
+    getInstanceOutput:
+      $ref: '#/components/schemas/instance'
+
+    updateInstanceInput:
+      type: object
+      properties:
+        extra:
+          type: object
+
+    updateInstanceOutput:
+      $ref: '#/components/schemas/instance'
+
+    associateFloatingIpInput:
+      type: object
+      properties:
+        floatingIpId:
+          type: string
+          format: uuid
+
+    associateFloatingIpOutput:
+      $ref: '#/components/schemas/instance'
+
+    disassociateFloatingIpOutput:
+      $ref: '#/components/schemas/instance'
+
+
+  ##
+  #
+  # Responses
+  #
+  ##
+  responses:
+    '204':
+      description: No Content
+    '400':
+      description: Bad Request
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '404':
+      description: Not Found
+    '500':
+      description: Internal Server Error
+
+  ##
+  #
+  # Examples
+  #
+  ##
+  examples:
+    listModuleCategoriesOutput:
+      value:
+        moduleCategories:
+          - id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+            name: "Jupyter Notebook"
+            description: "Jupyter Notebook description"
+            creator:
+              id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+              name: "system"
+              account: "system@ci.asus.com"
+            createdAt: "2021-01-01T00:00:00Z"
+            updatedAt: "2021-01-01T00:00:00Z"
+            moduleCount: 0
+          - id: "21de3f66-01e8-4dec-9ad9-e2570edd673e"
+            name: "Slurm Cluster"
+            description: "Slurm Cluster description"
+            creator:
+              id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+              name: "system"
+              account: "system@ci.asus.com"
+            createdAt: "2021-01-01T00:00:00Z"
+            updatedAt: "2021-01-01T00:00:00Z"
+            moduleCount: 3
+        total: 2
+
+    getModuleCategoryOutput:
+      value:
+        moduleCategory:
+          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+          name: "Jupyter Notebook"
+          description: "Jupyter Notebook description"
+          creator:
+            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+            name: "system"
+            account: "system@ci.asus.com"
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    createModuleCategoryInput:
+      value:
+        name: "Jupyter Notebook"
+        description: "Jupyter Notebook description"
+        creatorId: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+
+    createModuleCategoryOutput:
+      value:
+        moduleCategory:
+          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+          name: "Jupyter Notebook"
+          description: "Jupyter Notebook description"
+          creator:
+            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+            name: "system"
+            account: "system@ci.asus.com"
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    updateModuleCategoryInput:
+      value:
+        description: "Jupyter Notebook new description"
+
+    updateModuleCategoryOutput:
+      value:
+        moduleCategory:
+          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+          name: "Jupyter Notebook New"
+          description: "Jupyter Notebook new description"
+          creator:
+            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+            name: "system"
+            account: "system@ci.asus.com"
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    listModulesOutput:
+      value:
+        modules:
+          - id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+            name: "v24.05"
+            description: "Jupyter Notebook v24.05 description"
+            state: "activated"
+            questions: {}
+            moduleCategory:
+              id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+              name: "Jupyter Notebook"
+            creator:
+              id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+              name: "system"
+              account: "system@ci.asus.com"
+            createdAt: "2021-01-01T00:00:00Z"
+            updatedAt: "2021-01-01T00:00:00Z"
+          - id: "da5e625b-7722-4e3b-b877-d0df3f8efdb6"
+            name: "v24.04"
+            description: "Jupyter Notebook v24.04 description"
+            state: "deactivated"
+            questions: {}
+            moduleCategory:
+              id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+              name: "Jupyter Notebook"
+            creator:
+              id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+              name: "system"
+              account: "system@ci.asus.com"
+            createdAt: "2021-01-01T00:00:00Z"
+            updatedAt: "2021-01-01T00:00:00Z"
+        total: 2
+
+    getModuleOutput:
+      value:
+        module:
+          id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+          name: "v24.05"
+          description: "Jupyter Notebook v24.05 description"
+          state: "activated"
+          questions: {}
+          moduleCategory:
+            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+            name: "Jupyter Notebook"
+          creator:
+            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+            name: "system"
+            account: "system@ci.asus.com"
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    listModulesOutput.admin:
+      value:
+        modules:
+          - id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+            name: "v24.05"
+            description: "Jupyter Notebook v24.05 description"
+            state: "activated"
+            questions: {}
+            location: "/path/to/module/..."
+            public: true
+            moduleCategory:
+              id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+              name: "Jupyter Notebook"
+            creator:
+              id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+              name: "system"
+              account: "system@ci.asus.com"
+            createdAt: "2021-01-01T00:00:00Z"
+            updatedAt: "2021-01-01T00:00:00Z"
+          - id: "da5e625b-7722-4e3b-b877-d0df3f8efdb6"
+            name: "v24.04"
+            description: "Jupyter Notebook v24.04 description"
+            state: "deactivated"
+            questions: {}
+            location: "/path/to/module/..."
+            public: false
+            moduleCategory:
+              id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+              name: "Jupyter Notebook"
+            creator:
+              id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+              name: "system"
+              account: "system@ci.asus.com"
+            createdAt: "2021-01-01T00:00:00Z"
+            updatedAt: "2021-01-01T00:00:00Z"
+        total: 2
+
+    getModuleOutput.admin:
+      value:
+        module:
+          id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+          name: "v24.05"
+          description: "Jupyter Notebook v24.05 description"
+          state: "activated"
+          questions: {}
+          location: "/path/to/module/..."
+          public: true
+          moduleCategory:
+            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+            name: "Jupyter Notebook"
+          creator:
+            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+            name: "system"
+            account: "system@ci.asus.com"
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    updateModuleInput.admin:
+      value:
+        name: "v24.06"
+        description: "Jupyter Notebook v24.06 new description"
+        public: true
+
+    updateModuleOutput.admin:
+      value:
+        module:
+          id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+          name: "v24.06"
+          description: "Jupyter Notebook v24.06 new description"
+          state: "activated"
+          questions: {}
+          location: "/path/to/module/..."
+          public: true
+          moduleCategory:
+            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+            name: "Jupyter Notebook"
+          creator:
+            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+            name: "system"
+            account: "system@ci.asus.com"
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    createModuleInput.admin:
+      value:
+        name: "v24.05"
+        description: "Jupyter Notebook v24.05 description"
+        location: "/path/to/module/..."
+        moduleCategoryId: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+        creatorId: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+
+    createModuleOutput.admin:
+      value:
+        module:
+          id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+          name: "v24.05"
+          description: "Jupyter Notebook v24.05 description"
+          state: "activated"
+          questions: {}
+          location: "/path/to/module/..."
+          public: true
+          moduleCategory:
+            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+            name: "Jupyter Notebook"
+          creator:
+            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+            name: "system"
+            account: "system@ci.asus.com"
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    getModuleACLOutput.admin:
+      value:
+        moduleId: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+        projectIds:
+          - "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+
+    updateModuleACLInput.admin:
+      value:
+        projectIds:
+          - "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+
+    updateModuleACLOutput.admin:
+      value:
+        moduleId: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+        projectIds:
+          - "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+
+    listApplicationsOutput:
+      value:
+        applications:
+          - id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+            name: "my jupyter notebook"
+            description: "my jupyter notebook description"
+            state: "ready"
+            answers: 
+              answers: 
+              - default: []
+                description: "選擇安全性群組"
+                displayName: [
+                    "iansg"
+                ]
+                group: "network"
+                label: "安全性群組"
+                options: null
+                order: 0
+                rawValues: [
+                    "142324b0-c7a4-409a-b893-c9cb439e5855"
+                ]
+                required: true
+                type: "vpsSecurityGroups"
+                values: [
+                    "142324b0-c7a4-409a-b893-c9cb439e5855"
+                ]
+                variable: "security_group_ids"
+              - default: "8888"
+                description: "設置 Jupyter Notebook 的連接埠"
+                displayName: "8888"
+                group: "network"
+                label: "Jupyter Notebook 連接埠"
+                options: null
+                order: 0
+                rawValues: "8888"
+                required: false
+                type: "port"
+                values: "8888"
+                variable: "service_port"
+            module:
+              id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+              name: "v24.05"
+            moduleCategory:
+              id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+              name: "Jupyter Notebook"
+            namespace: "public"
+            shiftable: "true"
+            projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+            creator:
+              id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+              name: "david"
+              account: "david@asus.com"
+            updater:
+              id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+              name: "david"
+              account: "david@asus.com"
+            extra: {}
+            createdAt: "2021-01-01T00:00:00Z"
+            updatedAt: "2021-01-01T00:00:00Z"
+        total: 1
+
+    getApplicationOutput:
+      value:
+        application:
+          id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+          name: "my jupyter notebook"
+          description: "my jupyter notebook description"
+          state: "ready"
+          answers:
+            answers: 
+              - default: []
+                description: "選擇安全性群組"
+                displayName: [
+                    "iansg"
+                ]
+                group: "network"
+                label: "安全性群組"
+                options: null
+                order: 0
+                rawValues: [
+                    "142324b0-c7a4-409a-b893-c9cb439e5855"
+                ]
+                required: true
+                type: "vpsSecurityGroups"
+                values: [
+                    "142324b0-c7a4-409a-b893-c9cb439e5855"
+                ]
+                variable: "security_group_ids"
+              - default: "8888"
+                description: "設置 Jupyter Notebook 的連接埠"
+                displayName: "8888"
+                group: "network"
+                label: "Jupyter Notebook 連接埠"
+                options: null
+                order: 0
+                rawValues: "8888"
+                required: false
+                type: "port"
+                values: "8888"
+                variable: "service_port"
+          module:
+            id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+            name: "v24.05"
+          moduleCategory:
+            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+            name: "Jupyter Notebook"
+          namespace: "public"
+          shiftable: "true"
+          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+          creator:
+            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+            name: "david"
+            account: "david@asus.com"
+          updater:
+            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+            name: "david"
+            account: "david@asus.com"
+          extra: {}
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    createApplicationInput:
+      value:
+        name: "my jupyter notebook"
+        description: "my jupyter notebook description"
+        moduleId: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+        answers: {}
+
+    createApplicationInput.admin:
+      value:
+        name: "my jupyter notebook"
+        description: "my jupyter notebook description"
+        moduleId: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+        answers: {}
+        projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+        namespace: "public"
+        creatorId: "f83f7db0-f3e9-4e47-804b-06b43e60403d"
+
+    createApplicationOutput:
+      value:
+        application:
+          id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+          name: "my jupyter notebook"
+          description: "my jupyter notebook description"
+          state: "review"
+          answers: {}
+          module:
+            id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+            name: "v24.05"
+          moduleCategory:
+            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+            name: "Jupyter Notebook"
+          namespace: "public"
+          shiftable: "true"
+          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+          creator:
+            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+            name: "david"
+            account: "david@asus.com"
+          updater:
+            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+            name: "david"
+            account: "david@asus.com"
+          extra: {}
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    approveApplicationOutput:
+      value:
+        application:
+          id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+          name: "my jupyter notebook"
+          description: "my jupyter notebook description"
+          state: "Processing"
+          answers: {}
+          module:
+            id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+            name: "v24.05"
+          moduleCategory:
+            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+            name: "Jupyter Notebook"
+          namespace: "public"
+          shiftable: "true"
+          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+          creator:
+            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+            name: "david"
+            account: "david@asus.com"
+          updater:
+            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+            name: "david"
+            account: "david@asus.com"
+          extra: {}
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    rejectApplicationOutput:
+      value:
+        application:
+          id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+          name: "my jupyter notebook"
+          description: "my jupyter notebook description"
+          state: "Reject"
+          answers: {}
+          module:
+            id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+            name: "v24.05"
+          moduleCategory:
+            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+            name: "Jupyter Notebook"
+          namespace: "public"
+          shiftable: "true"
+          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+          creator:
+            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+            name: "david"
+            account: "david@asus.com"
+          updater:
+            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+            name: "david"
+            account: "david@asus.com"
+          extra: {}
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    getAppLogsOutput:
+      value:
+        logs: "=== 2025/01/06 - 09:00:09\nerror applying Terraform configuration: exit status 1\n\nError: Error creating openstack_networking_port_v2: Expected HTTP response code [201 202] when accessing [POST http://10.78.19.155:9696/v2.0/ports], but got 404 instead: {\"NeutronError\": {\"type\": \"SecurityGroupNotFound\", \"message\": \"Security group eb0860a0-1b6f-4a5b-b659-05963e41c173, 06c05943-a2b0-48b4-90dc-73b6a3bb8263 does not exist\", \"detail\": \"\"}}\n\n  with openstack_networking_port_v2.vm_port,\n  on main.tf line 40, in resource \"openstack_networking_port_v2\" \"vm_port\":\n  40: resource \"openstack_networking_port_v2\" \"vm_port\" {\n\n\n"
+
+    listInstancesOutput:
+      value:
+        instances:
+          - id: "437e4402-072d-4f30-a383-d44064980855"
+            name: "master"
+            application:
+              id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+              name: "my jupyter notebook"
+            projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+            referenceId: "123"
+            extra: {}
+            floatingIpId: ""
+            floatingIpAddress: ""
+            createdAt: "2021-01-01T00:00:00Z"
+            updatedAt: "2021-01-01T00:00:00Z"
+        total: 1
+
+    getInstanceOutput:
+      value:
+        instance:
+          id: "437e4402-072d-4f30-a383-d44064980855"
+          name: "master"
+          application:
+            id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+            name: "my jupyter notebook"
+          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+          referenceId: "1234"
+          extra: {}
+          floatingIpId: ""
+          floatingIpAddress: ""
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    updateInstanceInput:
+      value:
+        extra: {"floatingIP": "10.0.0.2"}
+
+    updateInstanceOutput:
+      value:
+        instance:
+          id: "437e4402-072d-4f30-a383-d44064980855"
+          name: "master"
+          application:
+            id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+            name: "my jupyter notebook"
+          referenceId: "1234"
+          extra: {"floatingIP": "10.0.0.2"}
+          floatingIpId: ""
+          floatingIpAddress: ""
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    associateFloatingIpInput:
+      value:
+        floatingIpId: "706049d4-861d-4e22-b869-ee7eef9d27ce"
+
+    associateFloatingIpOutput:
+      value:
+        instance:
+          id: "437e4402-072d-4f30-a383-d44064980855"
+          name: "master"
+          application:
+            id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+            name: "my jupyter notebook"
+          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+          referenceId: "1234"
+          extra: {}
+          floatingIpId: "706049d4-861d-4e22-b869-ee7eef9d27ce"
+          floatingIpAddress: "10.78.19.101"
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"
+
+    disassociateFloatingIpOutput:
+      value:
+        instance:
+          id: "437e4402-072d-4f30-a383-d44064980855"
+          name: "master"
+          application:
+            id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+            name: "my jupyter notebook"
+          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+          referenceId: "1234"
+          extra: {}
+          floatingIpId: ""
+          floatingIpAddress: ""
+          createdAt: "2021-01-01T00:00:00Z"
+          updatedAt: "2021-01-01T00:00:00Z"

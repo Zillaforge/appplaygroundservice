@@ -1,0 +1,32 @@
+version: 0.0.5
+kind: AppPlaygroundServiceScheduler
+app_playground_service_scheduler:
+  instance: AppPlaygroundServiceScheduler
+  core_grpc:
+    hosts: ["localhost:5111"]
+    tls:
+      enable: false
+      cert_path: /root/server-csr/APS.pem
+    connection_per_host: 3
+  tasks:
+    sync_projects: 
+      cron_expression: "0 */10 * * * * *"
+    # Applications 計價排程
+    applications_metering:
+      cron_expression: "0 * * * * * *"
+      metering_service:
+        exchange: mts
+        routing_key: "applications_metering"
+event_consume:
+  # service 輸入指定的 Service Name 或 empty(不啟動) 
+  service: my_redis_sentinel
+  channels:
+  - FromIAM
+services:
+  - name: my_redis_sentinel
+    kind: redis_sentinel
+    hosts:
+    - pegasus-cloud-redis-sentinel:26379
+    password: password
+    sentinel_password: password
+    master_group_name: mymaster

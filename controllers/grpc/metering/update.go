@@ -1,0 +1,61 @@
+package metering
+
+import (
+	cnt "AppPlaygroundService/constants"
+	"AppPlaygroundService/storages"
+	storCom "AppPlaygroundService/storages/common"
+	"AppPlaygroundService/utility"
+	"context"
+	"time"
+
+	"go.uber.org/zap"
+	cCnt "pegasus-cloud.com/aes/appplaygroundserviceclient/constants"
+	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
+	tkErr "pegasus-cloud.com/aes/toolkits/errors"
+	"pegasus-cloud.com/aes/toolkits/tracer"
+	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+)
+
+func (m *Method) UpdateMetering(ctx context.Context, input *pb.UpdateMeteringInput) (output *pb.MeteringInfo, err error) {
+	var (
+		funcName  = tkUtils.NameOfFunction().String()
+		requestID = utility.MustGetContextRequestID(ctx)
+	)
+
+	ctx, f := tracer.StartWithContext(ctx, funcName)
+	defer f(
+		tracer.Attributes{
+			"input":  &input,
+			"output": &output,
+			"error":  &err,
+		},
+	)
+
+	updateMeteringInput := &storCom.UpdateMeteringInput{
+		ApplicationID: input.ApplicationID,
+		UpdateData:    &storCom.MeteringUpdateInfo{},
+	}
+	if input.EndedAt != nil {
+		updateMeteringInput.UpdateData.EndedAt, _ = time.Parse(time.RFC3339, *input.EndedAt)
+	}
+	if input.LastPublishedAt != nil {
+		updateMeteringInput.UpdateData.LastPublishedAt, _ = time.Parse(time.RFC3339, *input.LastPublishedAt)
+	}
+
+	updateMeteringOutput, updateMeteringErr := storages.Use().UpdateMetering(ctx, updateMeteringInput)
+	if updateMeteringErr != nil {
+		if e, ok := tkErr.IsError(updateMeteringErr); ok {
+			switch e.Code() {
+			case cnt.StorageApplicationNotFoundErrCode:
+				return nil, tkErr.New(cCnt.GRPCApplicationNotFoundErr)
+			}
+		}
+		zap.L().With(
+			zap.String(cnt.GRPC, "storages.Use().UpdateMetering()"),
+			zap.String(cnt.RequestID, requestID),
+			zap.Any("input", updateMeteringInput),
+		).Error(updateMeteringErr.Error())
+		return nil, tkErr.New(cCnt.GRPCInternalServerErr).WithInner(updateMeteringErr)
+	}
+	return m.storage2pb(&updateMeteringOutput.Metering), nil
+}
