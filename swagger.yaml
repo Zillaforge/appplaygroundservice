@@ -1777,16 +1777,15 @@ components:
 
     getModuleCategoryOutput:
       value:
-        moduleCategory:
-          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
-          name: "Jupyter Notebook"
-          description: "Jupyter Notebook description"
-          creator:
-            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
-            name: "system"
-            account: "system@ci.asus.com"
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+        name: "Jupyter Notebook"
+        description: "Jupyter Notebook description"
+        creator:
+          id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+          name: "system"
+          account: "system@ci.asus.com"
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     createModuleCategoryInput:
       value:
@@ -1796,16 +1795,15 @@ components:
 
     createModuleCategoryOutput:
       value:
-        moduleCategory:
-          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
-          name: "Jupyter Notebook"
-          description: "Jupyter Notebook description"
-          creator:
-            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
-            name: "system"
-            account: "system@ci.asus.com"
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+        name: "Jupyter Notebook"
+        description: "Jupyter Notebook description"
+        creator:
+          id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+          name: "system"
+          account: "system@ci.asus.com"
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     updateModuleCategoryInput:
       value:
@@ -1813,16 +1811,15 @@ components:
 
     updateModuleCategoryOutput:
       value:
-        moduleCategory:
-          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
-          name: "Jupyter Notebook New"
-          description: "Jupyter Notebook new description"
-          creator:
-            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
-            name: "system"
-            account: "system@ci.asus.com"
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+        name: "Jupyter Notebook New"
+        description: "Jupyter Notebook new description"
+        creator:
+          id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+          name: "system"
+          account: "system@ci.asus.com"
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     listModulesOutput:
       value:
@@ -1859,21 +1856,20 @@ components:
 
     getModuleOutput:
       value:
-        module:
-          id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
-          name: "v24.05"
-          description: "Jupyter Notebook v24.05 description"
-          state: "activated"
-          questions: {}
-          moduleCategory:
-            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
-            name: "Jupyter Notebook"
-          creator:
-            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
-            name: "system"
-            account: "system@ci.asus.com"
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+        name: "v24.05"
+        description: "Jupyter Notebook v24.05 description"
+        state: "activated"
+        questions: {}
+        moduleCategory:
+          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+          name: "Jupyter Notebook"
+        creator:
+          id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+          name: "system"
+          account: "system@ci.asus.com"
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     listModulesOutput.admin:
       value:
@@ -1914,23 +1910,22 @@ components:
 
     getModuleOutput.admin:
       value:
-        module:
-          id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
-          name: "v24.05"
-          description: "Jupyter Notebook v24.05 description"
-          state: "activated"
-          questions: {}
-          location: "/path/to/module/..."
-          public: true
-          moduleCategory:
-            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
-            name: "Jupyter Notebook"
-          creator:
-            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
-            name: "system"
-            account: "system@ci.asus.com"
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+        name: "v24.05"
+        description: "Jupyter Notebook v24.05 description"
+        state: "activated"
+        questions: {}
+        location: "/path/to/module/..."
+        public: true
+        moduleCategory:
+          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+          name: "Jupyter Notebook"
+        creator:
+          id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+          name: "system"
+          account: "system@ci.asus.com"
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     updateModuleInput.admin:
       value:
@@ -1940,23 +1935,22 @@ components:
 
     updateModuleOutput.admin:
       value:
-        module:
-          id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
-          name: "v24.06"
-          description: "Jupyter Notebook v24.06 new description"
-          state: "activated"
-          questions: {}
-          location: "/path/to/module/..."
-          public: true
-          moduleCategory:
-            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
-            name: "Jupyter Notebook"
-          creator:
-            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
-            name: "system"
-            account: "system@ci.asus.com"
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+        name: "v24.06"
+        description: "Jupyter Notebook v24.06 new description"
+        state: "activated"
+        questions: {}
+        location: "/path/to/module/..."
+        public: true
+        moduleCategory:
+          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+          name: "Jupyter Notebook"
+        creator:
+          id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+          name: "system"
+          account: "system@ci.asus.com"
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     createModuleInput.admin:
       value:
@@ -1968,23 +1962,22 @@ components:
 
     createModuleOutput.admin:
       value:
-        module:
-          id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
-          name: "v24.05"
-          description: "Jupyter Notebook v24.05 description"
-          state: "activated"
-          questions: {}
-          location: "/path/to/module/..."
-          public: true
-          moduleCategory:
-            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
-            name: "Jupyter Notebook"
-          creator:
-            id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
-            name: "system"
-            account: "system@ci.asus.com"
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+        name: "v24.05"
+        description: "Jupyter Notebook v24.05 description"
+        state: "activated"
+        questions: {}
+        location: "/path/to/module/..."
+        public: true
+        moduleCategory:
+          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+          name: "Jupyter Notebook"
+        creator:
+          id: "4990ccdb-a9b1-49e5-91df-67c921601d81"
+          name: "system"
+          account: "system@ci.asus.com"
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     getModuleACLOutput.admin:
       value:
@@ -2066,63 +2059,62 @@ components:
 
     getApplicationOutput:
       value:
-        application:
-          id: "70403e9f-5488-47b0-94ad-52f878959f6b"
-          name: "my jupyter notebook"
-          description: "my jupyter notebook description"
-          state: "ready"
-          answers:
-            answers: 
-              - default: []
-                description: "選擇安全性群組"
-                displayName: [
-                    "iansg"
-                ]
-                group: "network"
-                label: "安全性群組"
-                options: null
-                order: 0
-                rawValues: [
-                    "142324b0-c7a4-409a-b893-c9cb439e5855"
-                ]
-                required: true
-                type: "vpsSecurityGroups"
-                values: [
-                    "142324b0-c7a4-409a-b893-c9cb439e5855"
-                ]
-                variable: "security_group_ids"
-              - default: "8888"
-                description: "設置 Jupyter Notebook 的連接埠"
-                displayName: "8888"
-                group: "network"
-                label: "Jupyter Notebook 連接埠"
-                options: null
-                order: 0
-                rawValues: "8888"
-                required: false
-                type: "port"
-                values: "8888"
-                variable: "service_port"
-          module:
-            id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
-            name: "v24.05"
-          moduleCategory:
-            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
-            name: "Jupyter Notebook"
-          namespace: "public"
-          shiftable: "true"
-          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
-          creator:
-            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
-            name: "david"
-            account: "david@asus.com"
-          updater:
-            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
-            name: "david"
-            account: "david@asus.com"
-          extra: {}
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+        name: "my jupyter notebook"
+        description: "my jupyter notebook description"
+        state: "ready"
+        answers:
+          answers: 
+            - default: []
+              description: "選擇安全性群組"
+              displayName: [
+                  "iansg"
+              ]
+              group: "network"
+              label: "安全性群組"
+              options: null
+              order: 0
+              rawValues: [
+                  "142324b0-c7a4-409a-b893-c9cb439e5855"
+              ]
+              required: true
+              type: "vpsSecurityGroups"
+              values: [
+                  "142324b0-c7a4-409a-b893-c9cb439e5855"
+              ]
+              variable: "security_group_ids"
+            - default: "8888"
+              description: "設置 Jupyter Notebook 的連接埠"
+              displayName: "8888"
+              group: "network"
+              label: "Jupyter Notebook 連接埠"
+              options: null
+              order: 0
+              rawValues: "8888"
+              required: false
+              type: "port"
+              values: "8888"
+              variable: "service_port"
+        module:
+          id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+          name: "v24.05"
+        moduleCategory:
+          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+          name: "Jupyter Notebook"
+        namespace: "public"
+        shiftable: "true"
+        projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+        creator:
+          id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+          name: "david"
+          account: "david@asus.com"
+        updater:
+          id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+          name: "david"
+          account: "david@asus.com"
+        extra: {}
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     createApplicationInput:
       value:
@@ -2143,90 +2135,87 @@ components:
 
     createApplicationOutput:
       value:
-        application:
-          id: "70403e9f-5488-47b0-94ad-52f878959f6b"
-          name: "my jupyter notebook"
-          description: "my jupyter notebook description"
-          state: "review"
-          answers: {}
-          module:
-            id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
-            name: "v24.05"
-          moduleCategory:
-            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
-            name: "Jupyter Notebook"
-          namespace: "public"
-          shiftable: "true"
-          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
-          creator:
-            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
-            name: "david"
-            account: "david@asus.com"
-          updater:
-            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
-            name: "david"
-            account: "david@asus.com"
-          extra: {}
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+        name: "my jupyter notebook"
+        description: "my jupyter notebook description"
+        state: "review"
+        answers: {}
+        module:
+          id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+          name: "v24.05"
+        moduleCategory:
+          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+          name: "Jupyter Notebook"
+        namespace: "public"
+        shiftable: "true"
+        projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+        creator:
+          id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+          name: "david"
+          account: "david@asus.com"
+        updater:
+          id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+          name: "david"
+          account: "david@asus.com"
+        extra: {}
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     approveApplicationOutput:
       value:
-        application:
-          id: "70403e9f-5488-47b0-94ad-52f878959f6b"
-          name: "my jupyter notebook"
-          description: "my jupyter notebook description"
-          state: "Processing"
-          answers: {}
-          module:
-            id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
-            name: "v24.05"
-          moduleCategory:
-            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
-            name: "Jupyter Notebook"
-          namespace: "public"
-          shiftable: "true"
-          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
-          creator:
-            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
-            name: "david"
-            account: "david@asus.com"
-          updater:
-            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
-            name: "david"
-            account: "david@asus.com"
-          extra: {}
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+        name: "my jupyter notebook"
+        description: "my jupyter notebook description"
+        state: "Processing"
+        answers: {}
+        module:
+          id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+          name: "v24.05"
+        moduleCategory:
+          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+          name: "Jupyter Notebook"
+        namespace: "public"
+        shiftable: "true"
+        projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+        creator:
+          id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+          name: "david"
+          account: "david@asus.com"
+        updater:
+          id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+          name: "david"
+          account: "david@asus.com"
+        extra: {}
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     rejectApplicationOutput:
       value:
-        application:
-          id: "70403e9f-5488-47b0-94ad-52f878959f6b"
-          name: "my jupyter notebook"
-          description: "my jupyter notebook description"
-          state: "Reject"
-          answers: {}
-          module:
-            id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
-            name: "v24.05"
-          moduleCategory:
-            id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
-            name: "Jupyter Notebook"
-          namespace: "public"
-          shiftable: "true"
-          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
-          creator:
-            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
-            name: "david"
-            account: "david@asus.com"
-          updater:
-            id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
-            name: "david"
-            account: "david@asus.com"
-          extra: {}
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+        name: "my jupyter notebook"
+        description: "my jupyter notebook description"
+        state: "Reject"
+        answers: {}
+        module:
+          id: "4ab5b92b-c75a-46b8-b280-fc861d1e2583"
+          name: "v24.05"
+        moduleCategory:
+          id: "59e0e12a-c857-44a4-88b2-2aa8baec4e00"
+          name: "Jupyter Notebook"
+        namespace: "public"
+        shiftable: "true"
+        projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+        creator:
+          id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+          name: "david"
+          account: "david@asus.com"
+        updater:
+          id: "7b567590-a5bd-4264-9bf9-7e18287e7b58"
+          name: "david"
+          account: "david@asus.com"
+        extra: {}
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     getAppLogsOutput:
       value:
@@ -2251,19 +2240,18 @@ components:
 
     getInstanceOutput:
       value:
-        instance:
-          id: "437e4402-072d-4f30-a383-d44064980855"
-          name: "master"
-          application:
-            id: "70403e9f-5488-47b0-94ad-52f878959f6b"
-            name: "my jupyter notebook"
-          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
-          referenceId: "1234"
-          extra: {}
-          floatingIpId: ""
-          floatingIpAddress: ""
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "437e4402-072d-4f30-a383-d44064980855"
+        name: "master"
+        application:
+          id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+          name: "my jupyter notebook"
+        projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+        referenceId: "1234"
+        extra: {}
+        floatingIpId: ""
+        floatingIpAddress: ""
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     updateInstanceInput:
       value:
@@ -2271,18 +2259,17 @@ components:
 
     updateInstanceOutput:
       value:
-        instance:
-          id: "437e4402-072d-4f30-a383-d44064980855"
-          name: "master"
-          application:
-            id: "70403e9f-5488-47b0-94ad-52f878959f6b"
-            name: "my jupyter notebook"
-          referenceId: "1234"
-          extra: {"floatingIP": "10.0.0.2"}
-          floatingIpId: ""
-          floatingIpAddress: ""
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "437e4402-072d-4f30-a383-d44064980855"
+        name: "master"
+        application:
+          id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+          name: "my jupyter notebook"
+        referenceId: "1234"
+        extra: {"floatingIP": "10.0.0.2"}
+        floatingIpId: ""
+        floatingIpAddress: ""
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     associateFloatingIpInput:
       value:
@@ -2290,32 +2277,30 @@ components:
 
     associateFloatingIpOutput:
       value:
-        instance:
-          id: "437e4402-072d-4f30-a383-d44064980855"
-          name: "master"
-          application:
-            id: "70403e9f-5488-47b0-94ad-52f878959f6b"
-            name: "my jupyter notebook"
-          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
-          referenceId: "1234"
-          extra: {}
-          floatingIpId: "706049d4-861d-4e22-b869-ee7eef9d27ce"
-          floatingIpAddress: "10.78.19.101"
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "437e4402-072d-4f30-a383-d44064980855"
+        name: "master"
+        application:
+          id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+          name: "my jupyter notebook"
+        projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+        referenceId: "1234"
+        extra: {}
+        floatingIpId: "706049d4-861d-4e22-b869-ee7eef9d27ce"
+        floatingIpAddress: "10.78.19.101"
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
 
     disassociateFloatingIpOutput:
       value:
-        instance:
-          id: "437e4402-072d-4f30-a383-d44064980855"
-          name: "master"
-          application:
-            id: "70403e9f-5488-47b0-94ad-52f878959f6b"
-            name: "my jupyter notebook"
-          projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
-          referenceId: "1234"
-          extra: {}
-          floatingIpId: ""
-          floatingIpAddress: ""
-          createdAt: "2021-01-01T00:00:00Z"
-          updatedAt: "2021-01-01T00:00:00Z"
+        id: "437e4402-072d-4f30-a383-d44064980855"
+        name: "master"
+        application:
+          id: "70403e9f-5488-47b0-94ad-52f878959f6b"
+          name: "my jupyter notebook"
+        projectId: "f6d8302c-864a-425e-a3cc-aa27cb6d69a0"
+        referenceId: "1234"
+        extra: {}
+        floatingIpId: ""
+        floatingIpAddress: ""
+        createdAt: "2021-01-01T00:00:00Z"
+        updatedAt: "2021-01-01T00:00:00Z"
