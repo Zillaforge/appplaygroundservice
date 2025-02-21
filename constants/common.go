@@ -9,7 +9,7 @@ const (
 	LowerAbbrName  = "aps"
 
 	Kind                 = PascalCaseName
-	Version              = "0.0.6"
+	Version              = "0.0.7"
 	APIPrefix            = "/" + LowerAbbrName + "/api/"
 	APIVersion           = "v1"
 	GlobalConfigPath     = "etc/ASUS"
