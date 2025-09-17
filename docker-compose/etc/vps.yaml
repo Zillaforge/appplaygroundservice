@@ -1,0 +1,216 @@
+version: 0.3.3
+kind: VirtualPlatformService
+virtualplatformservice:
+  instance: VirtualPlatformService
+  developer: true
+  # http:
+    # host: 0.0.0.0:8106
+    # access_control:
+      # allow_origins: ["*"]
+      # allow_credentials: true
+      # allow_headers: ["Origin", "Content-Length", "Content-Type", "Authorization"]
+      # allow_methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
+      # expose_headers: ["host-id", "version-id", "location-id"]
+  grpc:
+    host: 0.0.0.0:5106
+    unix_socket: 
+      path: /run/VirtualPlatformService.sock
+      conn_count: 20
+    write_buffer_size: 32768
+    read_buffer_size: 32768
+    max_receive_message_size: 4194304
+    max_send_message_size: 2147483647
+  logger:
+    system_log:
+      path: log/
+      # max_size: 10
+      # max_backups: 5
+      # max_age: 10
+      # compress: false
+      mode: debug
+      show_in_console: true
+    access_log:
+      path: log/
+      # max_size: 10
+      # max_backups: 5
+      # max_age: 10
+      # compress: false
+      # default_source_ip: 196.254.1.0
+    event_consume_log:
+      path: log/
+      # max_size: 10
+      # max_backups: 5
+      # max_age: 10
+      # compress: false
+  # tls:
+  #   enable: false
+  #   cert_path: tls/hcs/pegasus-hcs.pem
+  #   key_path: tls/hcs/pegasus-hcs-key.pem
+  tracer:
+    enable: false
+    host: http://pegasus-cloud-jaeger:14268/api/traces
+    timeout: 10
+storage:
+  provider: mariadb
+  mariadb:
+    host: pegasus-cloud-mariadb:3306
+    account: root
+    password: password
+    name: vps_trust
+    # timeout: 5
+    # max_open_conns: 150
+    # conn_max_lifetime: 10
+    # max_idle_conns: 150
+authentication:
+  service: myiam
+event_consume:
+  # service 輸入指定的 Service Name 或 empty(不啟動) 
+  service: my_redis_sentinel
+  channels:
+  - FromIAM
+services:
+  - name: myiam
+    kind: iam
+    hosts: 
+      # - pegasus-cloud-iamserver:5051
+      # - pegasus-cloud-iamserver-release:5051
+      - 140.110.160.146:31051
+    tls:
+      enable: false
+      cert_path: /root/server-csr/IAM.pem
+    connection_per_host: 3
+  - name: my_redis_sentinel
+    kind: redis_sentinel
+    hosts:
+    - pegasus-cloud-redis-sentinel:26379
+    password: password
+    sentinel_password: password
+    master_group_name: mymaster
+vrm:
+  host: vrm-server-release:5109
+  tls:
+    enable: false
+    cert_path: /root/server-csr/IAM.pem
+openstack:
+  auth_url: "http://140.110.139.17:5000/v3"
+  domain: "trustedcloud"
+  admin_project: "trustedcloud"
+  admin: "test@trusted-cloud.nchc.org.tw"
+  admin_pwd: "password123"
+  ldap_enabled: true
+  # pwd_method: "reverse" # ["reverse", "otp"]
+  pwd_method: "otp" # ["reverse", "otp"]
+  pwd_otp_secret: "pwd_otp_secret"
+  network:
+    cidr_blacklist: []
+  micro_version:
+    nova: "2.91" # since 2.92, nova API not allow to generate keypair
+    cinder: "3.71"
+    manila: "2.63"
+  project_name_iam_mapping: "ID"
+  default_nova_az: "default"
+  gnocchi_granularity: 300
+  gnocchi_granularity_cpu_alarm: 60
+  enable_snapshot_actual_size: true
+  enable_gpu_quota: true
+  manila:
+    enabled: false
+    share_type: "default_share_type"
+  vgpu_monitor:
+    enabled: false
+    prometheus_addr: "http://10.78.26.148:9090"
+  # 如果opsk沒有該role, panic
+  roles:
+    - "admin"
+    - "member"
+    # - "load-balancer_member"
+    # - "creator"
+    # - "key-manager:service-admin"
+  timeout: # seconds
+    connection: 5 
+    vol_create_with_server: 10
+  system_volume_type: "SSD"
+  volume_type_whitelist: ["SSD"]
+opsk_role_mapping:
+  TENANT_ADMIN:
+  - "member"
+  - "load-balancer_member"
+  - "creator"
+  TENANT_MEMBER:
+  - "member"
+  - "load-balancer_member"
+  - "creator"
+  vps_adm: # ${.openstack.admin)在每個project的role
+  - "admin"
+  - "key-manager:service-admin"
+namespace:
+  all:
+    - name: "public"
+      nameservers: ["172.22.44.53"]
+    - name: "private"
+      nameservers: ["172.22.44.54"]
+  default: "public"
+network_bonding_mode: true
+job_sync_interval:
+  iam: 300
+  compute: 10
+  net: 10
+  block: 10
+  lb: 10
+  quota: 60
+scheduler_duration: # every X hours, 0<X<=24 && 24%X==0
+  gc: 2
+  metering: 4
+available_district: "tw-tc-ad1"
+vm_customize:
+  yum_repo_rocky: "https://free.nchc.org.tw/rocky" # special characters: only support ['.','/']
+  apt_repo: "https://free.nchc.org.tw/ubuntu"
+  ntp_servers:
+    - "clock.nchc.org.tw"
+  timezone: "Asia/Taipei"
+  vgpu_license_token: # by namespace
+    public: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ODcwM2YxNy00ZGNlLTRkYjgtOWQ5MS1kMGYwODQzYWEyYTYiLCJpc3MiOiJOTFMgU2VydmljZSBJbnN0YW5jZSIsImF1ZCI6Ik5MUyBMaWNlbnNlZCBDbGllbnQiLCJpYXQiOjE3MzYxNDM4ODAsIm5iZiI6MTczNjE0Mzg4MCwiZXhwIjozMjUwMzc2NjM5OSwicHJvdG9jb2xfdmVyc2lvbiI6IjIuMCIsInVwZGF0ZV9tb2RlIjoiQUJTT0xVVEUiLCJzY29wZV9yZWZfbGlzdCI6WyIwNmZiZmQyZC0yZmIyLTQwODYtYWNmZS1hN2I1MmIwN2FjNzEiXSwiZnVsZmlsbG1lbnRfY2xhc3NfcmVmX2xpc3QiOltdLCJzZXJ2aWNlX2luc3RhbmNlX2NvbmZpZ3VyYXRpb24iOnsibmxzX3NlcnZpY2VfaW5zdGFuY2VfcmVmIjoiZDZmODA2NmQtZjE5OC00ZDNlLWIxNzMtMjA1N2RhMDdjYjliIiwic3ZjX3BvcnRfc2V0X2xpc3QiOlt7ImlkeCI6MCwiZF9uYW1lIjoiRExTIiwic3ZjX3BvcnRfbWFwIjpbeyJzZXJ2aWNlIjoiYXV0aCIsInBvcnQiOjQ0My4wfSx7InNlcnZpY2UiOiJsZWFzZSIsInBvcnQiOjQ0My4wfV19XSwibm9kZV91cmxfbGlzdCI6W3siaWR4IjowLCJ1cmwiOiIxMC43OC4xOS4xNDEiLCJ1cmxfcXIiOiIxMC43OC4xOS4xNDEiLCJzdmNfcG9ydF9zZXRfaWR4IjowfV19LCJzZXJ2aWNlX2luc3RhbmNlX3B1YmxpY19rZXlfY29uZmlndXJhdGlvbiI6eyJzZXJ2aWNlX2luc3RhbmNlX3B1YmxpY19rZXlfbWUiOnsibW9kIjoiY2RlNzU4MzQ0NDM1ZDUzNzU2MzhhYmRlZjEyYjhkMWFjMWUyNTZkNDI2ZmU3MzYzNDAzMGZiOGE2OGExMTlhNDk2MzRmNmZhOGM0ZmRjN2U1MzdhMDc2MjM2MjI2MzIyMTUwMTg3YTU5NjljYTdiZjQ4NDc2MGNiOTM2NjBhZDc4NWExMjcwMWRmMTU3MWI5Njc0ZjgyMjMxMWFhN2EyYjY3MDZiNzA2MzA0OWJkMmE3MjZhMmM5ZTJkOTU1MDcwYjhlMmE5OWExMGNkZGY5MzZmMmFhYmEwMmZlOTBjN2EyNmE4MzcwMGJhMTI3NDg3YzAzODgzOWRkZTcwZjM5MDU2ZmFjNDkwODVmYTVhZTFhNzVkYTg4MWNjMTQ1Nzc0OTM4MTQ3ZmNkMjZhOWU4ZWRhNzI4ZmJjN2ZiMjRmNWFjMmM5OWRmMTY1MjdhN2UyZmVhMjQ3MTFhYTVmYmU0NDcxYjA4ODY4NGZjZTA4OTkzZGFhOGMxNzEwM2E3NWU2ODYyNjlkMTU3Y2I3YTVjYWQyZmJiZjUxYmFhNmE4MWM4OTkwMzEzYjVhNDU4N2FiYTBmMjZiOTRlODk0ZDQzMWFkODgzNmY4NWExMjdlMmZkMTE4YzY1N2M0MzNkZGE0MzNiOTg5ODBiNjZhYTY5YmFkYTVmMjFiMTk5NzkyNTkiLCJleHAiOjY1NTM3fSwic2VydmljZV9pbnN0YW5jZV9wdWJsaWNfa2V5X3BlbSI6Ii0tLS0tQkVHSU4gUFVCTElDIEtFWS0tLS0tXG5NSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQXplZFlORVExMVRkV09LdmU4U3VOXG5Hc0hpVnRRbS9uTmpRREQ3aW1paEdhU1dOUGI2akUvY2ZsTjZCMkkySW1NaUZRR0hwWmFjcDc5SVIyRExrMllLXG4xNFdoSndIZkZYRzVaMCtDSXhHcWVpdG5CcmNHTUVtOUtuSnFMSjR0bFZCd3VPS3BtaEROMzVOdktxdWdMK2tNXG5laWFvTndDNkVuU0h3RGlEbmQ1dzg1Qlcrc1NRaGZwYTRhZGRxSUhNRkZkMGs0RkgvTkpxbm83YWNvKzhmN0pQXG5Xc0xKbmZGbEo2ZmkvcUpIRWFwZnZrUnhzSWhvVDg0SW1UMnFqQmNRT25YbWhpYWRGWHkzcGNyUys3OVJ1cWFvXG5ISW1RTVR0YVJZZXJvUEpybE9pVTFER3RpRGI0V2hKK0w5RVl4bGZFTTkya003bUpnTFpxcHB1dHBmSWJHWmVTXG5XUUlEQVFBQlxuLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tIiwia2V5X3JldGVudGlvbl9tb2RlIjoiTEFURVNUX09OTFkifX0.qpAg5IUFKhi5CX8yP_rLyF7dqTY8GdgIy8L-Fei3LcuAZr7grz6BvIdkQxInDVXXIQTuWxuQ_vurwBzOisQW3pman2kp77NnDebWO-Mk3zPWLFqa6eVQVs6olsRKKT1WuuRonlonlowhhHdLK4KVoJjl4ttsU8Jz0k3fXh8azg2m7o96pRaA3XXgbR02GKTy1w4wXqZmvOId7_7xP1DB2LL3L1pMkgky-zJG66miUCsw4q8Dc3r5BcKuMrzMcTbNsADGHn0NsV_WDXsbAT33G1lzzkg2KLR-nMkD-f9Hncpdwn1kqYpR1Vbp6PxG1McsLQlwPehXq7VgkfEiHh8ELg"
+    private: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ODcwM2YxNy00ZGNlLTRkYjgtOWQ5MS1kMGYwODQzYWEyYTYiLCJpc3MiOiJOTFMgU2VydmljZSBJbnN0YW5jZSIsImF1ZCI6Ik5MUyBMaWNlbnNlZCBDbGllbnQiLCJpYXQiOjE3MzYxNDM4ODAsIm5iZiI6MTczNjE0Mzg4MCwiZXhwIjozMjUwMzc2NjM5OSwicHJvdG9jb2xfdmVyc2lvbiI6IjIuMCIsInVwZGF0ZV9tb2RlIjoiQUJTT0xVVEUiLCJzY29wZV9yZWZfbGlzdCI6WyIwNmZiZmQyZC0yZmIyLTQwODYtYWNmZS1hN2I1MmIwN2FjNzEiXSwiZnVsZmlsbG1lbnRfY2xhc3NfcmVmX2xpc3QiOltdLCJzZXJ2aWNlX2luc3RhbmNlX2NvbmZpZ3VyYXRpb24iOnsibmxzX3NlcnZpY2VfaW5zdGFuY2VfcmVmIjoiZDZmODA2NmQtZjE5OC00ZDNlLWIxNzMtMjA1N2RhMDdjYjliIiwic3ZjX3BvcnRfc2V0X2xpc3QiOlt7ImlkeCI6MCwiZF9uYW1lIjoiRExTIiwic3ZjX3BvcnRfbWFwIjpbeyJzZXJ2aWNlIjoiYXV0aCIsInBvcnQiOjQ0My4wfSx7InNlcnZpY2UiOiJsZWFzZSIsInBvcnQiOjQ0My4wfV19XSwibm9kZV91cmxfbGlzdCI6W3siaWR4IjowLCJ1cmwiOiIxMC43OC4xOS4xNDEiLCJ1cmxfcXIiOiIxMC43OC4xOS4xNDEiLCJzdmNfcG9ydF9zZXRfaWR4IjowfV19LCJzZXJ2aWNlX2luc3RhbmNlX3B1YmxpY19rZXlfY29uZmlndXJhdGlvbiI6eyJzZXJ2aWNlX2luc3RhbmNlX3B1YmxpY19rZXlfbWUiOnsibW9kIjoiY2RlNzU4MzQ0NDM1ZDUzNzU2MzhhYmRlZjEyYjhkMWFjMWUyNTZkNDI2ZmU3MzYzNDAzMGZiOGE2OGExMTlhNDk2MzRmNmZhOGM0ZmRjN2U1MzdhMDc2MjM2MjI2MzIyMTUwMTg3YTU5NjljYTdiZjQ4NDc2MGNiOTM2NjBhZDc4NWExMjcwMWRmMTU3MWI5Njc0ZjgyMjMxMWFhN2EyYjY3MDZiNzA2MzA0OWJkMmE3MjZhMmM5ZTJkOTU1MDcwYjhlMmE5OWExMGNkZGY5MzZmMmFhYmEwMmZlOTBjN2EyNmE4MzcwMGJhMTI3NDg3YzAzODgzOWRkZTcwZjM5MDU2ZmFjNDkwODVmYTVhZTFhNzVkYTg4MWNjMTQ1Nzc0OTM4MTQ3ZmNkMjZhOWU4ZWRhNzI4ZmJjN2ZiMjRmNWFjMmM5OWRmMTY1MjdhN2UyZmVhMjQ3MTFhYTVmYmU0NDcxYjA4ODY4NGZjZTA4OTkzZGFhOGMxNzEwM2E3NWU2ODYyNjlkMTU3Y2I3YTVjYWQyZmJiZjUxYmFhNmE4MWM4OTkwMzEzYjVhNDU4N2FiYTBmMjZiOTRlODk0ZDQzMWFkODgzNmY4NWExMjdlMmZkMTE4YzY1N2M0MzNkZGE0MzNiOTg5ODBiNjZhYTY5YmFkYTVmMjFiMTk5NzkyNTkiLCJleHAiOjY1NTM3fSwic2VydmljZV9pbnN0YW5jZV9wdWJsaWNfa2V5X3BlbSI6Ii0tLS0tQkVHSU4gUFVCTElDIEtFWS0tLS0tXG5NSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQXplZFlORVExMVRkV09LdmU4U3VOXG5Hc0hpVnRRbS9uTmpRREQ3aW1paEdhU1dOUGI2akUvY2ZsTjZCMkkySW1NaUZRR0hwWmFjcDc5SVIyRExrMllLXG4xNFdoSndIZkZYRzVaMCtDSXhHcWVpdG5CcmNHTUVtOUtuSnFMSjR0bFZCd3VPS3BtaEROMzVOdktxdWdMK2tNXG5laWFvTndDNkVuU0h3RGlEbmQ1dzg1Qlcrc1NRaGZwYTRhZGRxSUhNRkZkMGs0RkgvTkpxbm83YWNvKzhmN0pQXG5Xc0xKbmZGbEo2ZmkvcUpIRWFwZnZrUnhzSWhvVDg0SW1UMnFqQmNRT25YbWhpYWRGWHkzcGNyUys3OVJ1cWFvXG5ISW1RTVR0YVJZZXJvUEpybE9pVTFER3RpRGI0V2hKK0w5RVl4bGZFTTkya003bUpnTFpxcHB1dHBmSWJHWmVTXG5XUUlEQVFBQlxuLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tIiwia2V5X3JldGVudGlvbl9tb2RlIjoiTEFURVNUX09OTFkifX0.qpAg5IUFKhi5CX8yP_rLyF7dqTY8GdgIy8L-Fei3LcuAZr7grz6BvIdkQxInDVXXIQTuWxuQ_vurwBzOisQW3pman2kp77NnDebWO-Mk3zPWLFqa6eVQVs6olsRKKT1WuuRonlonlowhhHdLK4KVoJjl4ttsU8Jz0k3fXh8azg2m7o96pRaA3XXgbR02GKTy1w4wXqZmvOId7_7xP1DB2LL3L1pMkgky-zJG66miUCsw4q8Dc3r5BcKuMrzMcTbNsADGHn0NsV_WDXsbAT33G1lzzkg2KLR-nMkD-f9Hncpdwn1kqYpR1Vbp6PxG1McsLQlwPehXq7VgkfEiHh8ELg"
+memcache:
+  ttl: 60
+gpu_models:
+  passthrough:
+  - "gtx1080ti"
+  vgpu:
+  - "T4_VGPU"
+  - "H100_VGPU"
+default_quotas:
+  vm: 20
+  vcpu: 100
+  ram: 102400 # in MiB
+  gpu: 5
+  block_size: 1024 # in GiB
+  network: 10
+  router: -1
+  floating_ip: 10
+  loadbalancer: -1
+  share: -1
+  share_size: 1024 # in GiB
+littlebell: # notification service
+  enable: false
+  host: http://pegasus-cloud-snsserver:8092
+  region: default
+  credential:
+    project_id: 14735dfa-5553-46cc-b4bd-405e711b223f
+    user_id: 4990ccdb-a9b1-49e5-91df-67c921601d81
+  arn: "arn:aws:sns:default:14735dfa-5553-46cc-b4bd-405e711b223f:lbm-svc-event-publish-topic"
+metering:
+  enable: false
+  amqp:
+    account: guest
+    password: guest
+    host: pegasus-cloud-rabbitmq:5672
+    manage_host: pegasus-cloud-rabbitmq:15672
+    exchange: mts
+    timeout: 5
+    rpc_timeout: 10
+    vhost: "/"
+    operation_connection_num: 2
+    channel_num: 1
+    replica_num: 0
+    consumer_connection_num: 1

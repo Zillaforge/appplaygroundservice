@@ -1,0 +1,37 @@
+services:
+  pegasus-cloud-iam-swagger:
+    profiles:
+      - ${SWAGGER_DISABLE:-}
+    image: swaggerapi/swagger-ui:v5.20.2
+    container_name: swagger-ui-iam
+    volumes:
+      - ${PWD}/..:/home
+    environment:
+      - SWAGGER_JSON=/home/pegasusiam/swagger.yaml
+    networks:
+      pegasus-cloud-network:
+        ipv4_address: 172.40.206.0
+    ports:
+      - "8081:8080"
+
+
+  pegasus-cloud-aps-swagger:
+    profiles:
+      - ${SWAGGER_DISABLE:-}
+    image: swaggerapi/swagger-ui:v5.20.2
+    container_name: swagger-ui-aps
+    volumes:
+      - ${PWD}/..:/home
+    environment:
+      - SWAGGER_JSON=/home/appplaygroundservice/swagger.yaml
+    networks:
+      pegasus-cloud-network:
+        ipv4_address: 172.40.206.2
+    ports:
+      - "8082:8080"
+
+
+networks:
+  pegasus-cloud-network:
+    external: true
+    name: pegasus-cloud-network

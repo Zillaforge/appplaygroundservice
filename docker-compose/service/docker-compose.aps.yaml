@@ -1,27 +1,59 @@
-version: "2"
 services:
   pegasus-cloud-aps:
-    image: ociscloud/golang:1.22.4-${PLATFORM:-ubuntu}-amd64
+    profiles:
+      - ${APS_DISABLE:-}  
+    image: golang:1.22.4-alpine
     container_name: aps-server
     networks:
       pegasus-cloud-network:
         ipv4_address: 172.40.117.0
-    working_dir: /home/${SERVICE_FOLDER_NAME}
+    working_dir: /home/${APS_FOLDER_NAME}
     environment:
       - GOPROXY=${GOPROXY}
     volumes:
       - ${PWD}/..:/home
       - pegasus-cloud-eventpublishplugin:/var/lib/ASUS/EventPublishPlugin
-    entrypoint: ["tail", "-f", "/dev/null"]
+      - ${PWD}/docker-compose/etc/aps.yaml:/mnt/aps.yaml
+    entrypoint:
+      - "sh"
+      - "-c"
+      - |-
+        apk add make libc6-compat && \
+        rm -rf tmp/* && \
+        make RELEASE_MODE=prod go-build && \
+        cp tmp/AppPlaygroundService* /AppPlaygroundService && \
+        /AppPlaygroundService --config /mnt/aps.yaml serve
     ports:
       - "5111:5111" # grpc
       - "8111:8111" # http
-    privileged: true
+    restart: on-failure
+
+  pegasus-cloud-aps-release:
+    profiles:
+      - ${APS_RELEASE_DISABLE:-}
+    image: ociscloud/app-playground-service:0.0.7
+    tty: true
+    container_name: aps-server-release
+    networks:
+      pegasus-cloud-network:
+        ipv4_address: 172.40.117.1
+    volumes:
+      - ${PWD}/docker-compose/etc/aps.yaml:/mnt/aps.yaml
+      - pegasus-cloud-eventpublishplugin:/var/lib/ASUS/EventPublishPlugin
+      - pegasus-cloud-aps-sock:/run
+    command: ["/AppPlaygroundService","serve","-c","/mnt/aps.yaml"]
+    ports:
+      - "8111:8111" # http
+    restart: on-failure  
+
 networks:
   pegasus-cloud-network:
     external: true
     name: pegasus-cloud-network
+
 volumes:
+  pegasus-cloud-aps-sock:
+    name: pegasus-cloud-aps-sock
   pegasus-cloud-eventpublishplugin:
     name: pegasus-cloud-eventpublishplugin
     external: true

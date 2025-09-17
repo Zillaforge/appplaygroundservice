@@ -1,0 +1,56 @@
+services:
+  pegasus-cloud-vps:
+    profiles:
+      - ${VPS_DISABLE:-}  
+    image: golang:1.22.4-alpine
+    tty: true
+    container_name: vps-server
+    networks:
+      pegasus-cloud-network:
+        ipv4_address: 172.40.112.0
+    working_dir: /home/${VPS_FOLDER_NAME}
+    environment:
+      - GOPROXY=${GOPROXY}
+    volumes:
+      - ${PWD}/..:/home
+    entrypoint: 
+      - "sh"
+      - "-c"
+      - |-
+        apk add make libc6-compat && \
+        make start
+    # entrypoint: ["tail", "-f", "/dev/null"]
+    ports:
+      - "8106:8106" # http
+    restart: on-failure  
+    # privileged: true
+
+
+  pegasus-cloud-vps-release:
+    profiles:
+      - ${VPS_RELEASE_DISABLE:-}
+    image: ociscloud/virtual-platform-service:0.3.3
+    tty: true
+    container_name: vps-server-release
+    networks:
+      pegasus-cloud-network:
+        ipv4_address: 172.40.112.1
+    volumes:
+      - ${PWD}/docker-compose/etc/vps.yaml:/mnt/vps.yaml
+      - pegasus-cloud-vps-sock:/run
+    command: ["/VirtualPlatformService","serve","-c","/mnt/vps.yaml"]
+    ports:
+      - "8106:8106" # http
+    restart: on-failure  
+
+networks:
+  pegasus-cloud-network:
+    external: true
+    name: pegasus-cloud-network
+
+volumes:
+  pegasus-cloud-vps-sock:
+    name: pegasus-cloud-vps-sock
+  pegasus-cloud-eventpublishplugin:
+    name: pegasus-cloud-eventpublishplugin
+    external: true

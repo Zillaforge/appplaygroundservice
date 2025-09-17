@@ -14,14 +14,20 @@ do
     cp $pkg $lPath
 done
 
-cp /lib/x86_64-linux-gnu/libresolv.so.2 $TMP_LINK_FILES/lib/x86_64-linux-gnu/libresolv.so.2
-cp /lib/x86_64-linux-gnu/libnss_dns.so.2 $TMP_LINK_FILES/lib/x86_64-linux-gnu/libnss_dns.so.2
+cp /lib/$(uname -m)-linux-gnu/libresolv.so.2 $TMP_LINK_FILES/lib/$(uname -m)-linux-gnu/libresolv.so.2
+cp /lib/$(uname -m)-linux-gnu/libnss_dns.so.2 $TMP_LINK_FILES/lib/$(uname -m)-linux-gnu/libnss_dns.so.2
 cp /usr/local/go/lib/time/zoneinfo.zip $TMP_LINK_FILES/zoneinfo.zip
 
 # Download terraform exec file
 TERRAFORM_VERSION=1.9.8
-TERRAFORM_URL="https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
-TERRAFORM_ZIP=$TMP/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+ARCH=$(uname -m)
+if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
+  TERRAFORM_ARCH=arm64
+else
+  TERRAFORM_ARCH=amd64
+fi
+TERRAFORM_URL="https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${TERRAFORM_ARCH}.zip"
+TERRAFORM_ZIP=$TMP/terraform_${TERRAFORM_VERSION}_linux_${TERRAFORM_ARCH}.zip
 TERRAFORM_BIN=$TMP_LINK_FILES/usr/bin
 
 mkdir -p $TERRAFORM_BIN

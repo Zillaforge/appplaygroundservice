@@ -1,4 +1,3 @@
-version: "2"
 services:
   pegasus-cloud-mariadb:
     image: mariadb:10.5.8
@@ -13,6 +12,8 @@ services:
     ports:
       - "3306:3306"
   pegasus-cloud-phpmyadmin:
+    profiles:
+      - ${PHPMYADMIN_DISABLE:-}  
     image: phpmyadmin/phpmyadmin
     container_name: mariadb-phpmyadmin
     environment:
