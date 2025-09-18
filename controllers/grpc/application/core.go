@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
+	"github.com/Zillaforge/appplaygroundserviceclient/pb"
 )
 
 // Method is implement all methods as pb.ApplicationCRUDControllerServer

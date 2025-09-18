@@ -5,7 +5,7 @@ import (
 	"AppPlaygroundService/modules/application/terraform"
 	"fmt"
 
-	"pegasus-cloud.com/aes/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/mviper"
 )
 
 var provider common.Provider

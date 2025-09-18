@@ -17,13 +17,13 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/aps"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/littlebell"
-	"pegasus-cloud.com/aes/toolkits/mviper"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	"github.com/Zillaforge/appplaygroundserviceclient/aps"
+	"github.com/Zillaforge/appplaygroundserviceclient/pb"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/littlebell"
+	"github.com/Zillaforge/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
 )
 
 type ApproveApplicationInput struct {

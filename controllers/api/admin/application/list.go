@@ -7,15 +7,15 @@ import (
 	"AppPlaygroundService/utility"
 	"net/http"
 
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
+	tkErr "github.com/Zillaforge/toolkits/errors"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/aps"
-	cCnt "pegasus-cloud.com/aes/appplaygroundserviceclient/constants"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	"github.com/Zillaforge/appplaygroundserviceclient/aps"
+	cCnt "github.com/Zillaforge/appplaygroundserviceclient/constants"
+	"github.com/Zillaforge/appplaygroundserviceclient/pb"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
 )
 
 type (

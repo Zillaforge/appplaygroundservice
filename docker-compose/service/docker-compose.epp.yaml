@@ -27,7 +27,7 @@ services:
   pegasus-cloud-eventpublishplugin-release:
     profiles:
       - ${EPP_RELEASE_DISABLE:-}
-    image: ociscloud/event-publish-plugin:0.1.2
+    image: ${OWNER}/event-publish-plugin:0.1.2
     container_name: epp-server-release
     networks:
       pegasus-cloud-network:

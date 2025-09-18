@@ -3,7 +3,7 @@ package common
 import (
 	"context"
 
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
+	"github.com/Zillaforge/appplaygroundserviceclient/pb"
 )
 
 type (

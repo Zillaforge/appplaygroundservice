@@ -5,7 +5,7 @@ import (
 	authCom "AppPlaygroundService/authentication/common"
 	"context"
 
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
+	"github.com/Zillaforge/appplaygroundserviceclient/pb"
 )
 
 type ModuleCategory struct {

@@ -17,9 +17,9 @@ import (
 	"time"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/aps"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
+	"github.com/Zillaforge/appplaygroundserviceclient/aps"
+	"github.com/Zillaforge/appplaygroundserviceclient/pb"
+	tkErr "github.com/Zillaforge/toolkits/errors"
 )
 
 func (h Handler) callBackAfterApproveEvent() func(context.Context, *fsm.Event) {

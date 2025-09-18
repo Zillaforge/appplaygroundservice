@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
 )
 
 func ResourceReview(c *gin.Context) {

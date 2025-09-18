@@ -5,8 +5,8 @@ import (
 	"reflect"
 
 	"google.golang.org/protobuf/types/known/emptypb"
-	cCnt "pegasus-cloud.com/aes/appplaygroundserviceclient/constants"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
+	cCnt "github.com/Zillaforge/appplaygroundserviceclient/constants"
+	tkErr "github.com/Zillaforge/toolkits/errors"
 )
 
 // A generic empty message that you can re-use to avoid defining duplicated

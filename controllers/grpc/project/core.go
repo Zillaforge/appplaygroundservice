@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"google.golang.org/protobuf/types/known/emptypb"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
+	"github.com/Zillaforge/appplaygroundserviceclient/pb"
 )
 
 // Method is implement all methods as pb.ProjectCRUDControllerServer

@@ -12,7 +12,7 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	pbac "pegasus-cloud.com/aes/toolkits/pbac/gin"
+	pbac "github.com/Zillaforge/toolkits/pbac/gin"
 )
 
 func enableAdminAppPlaygroundServiceRouter(rg *gin.RouterGroup) {

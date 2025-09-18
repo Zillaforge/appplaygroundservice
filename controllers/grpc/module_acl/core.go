@@ -3,7 +3,7 @@ package moduleacl
 import (
 	"AppPlaygroundService/storages/tables"
 
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
+	"github.com/Zillaforge/appplaygroundserviceclient/pb"
 )
 
 // Method is implement all methods as pb.ModuleAclCRUDControllerServer

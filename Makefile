@@ -1,4 +1,4 @@
-OWNER ?= ociscloud
+OWNER ?= Zillaforge
 PROJECT ?= AppPlaygroundService
 ABBR ?= aps
 IMAGE_NAME ?= app-playground-service
@@ -9,7 +9,7 @@ ARCH ?= $(shell uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')
 PREVERSION ?= 0.0.7
 VERSION ?= $(shell cat VERSION)
 PWD := $(shell pwd)
-GO_PROXY ?= "https://proxy.golang.org,http://proxy.pegasus-cloud.com:8078"
+# GO_PROXY ?= "https://proxy.golang.org,http://proxy.pegasus-cloud.com:8078"
 
 # Release Mode could be dev or prod,
 # dev: default, will add commit id to version
@@ -65,7 +65,7 @@ release:
 	@mkdir -p tmp
 	@rm -rf tmp/$(OS)
 	@docker rm -f build-env
-	@docker run --name build-env --rm -e GOPROXY=$(GO_PROXY) -e GOSUMDB="off" --network=host -v $(PWD)/..:/home -w $(WORK_DIR) $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make OS=$(OS) build
+	@docker run --name build-env --rm -v $(PWD)/..:/home -w $(WORK_DIR) $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make OS=$(OS) build
 	@mkdir tmp/$(OS)
 	@mv tmp/$(PROJECT)* tmp/$(OS)
 
@@ -74,10 +74,10 @@ release-image:
 	@make set-version
 	@mkdir -p build/scratch_image/tmp
 	@docker rm -f build-env
-	@docker run --name build-env --rm -e GOPROXY=$(GO_PROXY) -e GOSUMDB="off" --network=host -v $(PWD)/..:/home -w $(WORK_DIR) $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make build-container
+	@docker run --name build-env --rm -v $(PWD)/..:/home -w $(WORK_DIR) $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make build-container
 	@docker rmi -f $(OWNER)/$(IMAGE_NAME):$(RELEASE_VERSION)
 	@docker build -t $(OWNER)/$(IMAGE_NAME):$(RELEASE_VERSION) build/scratch_image/
-	@docker run --name build-env --rm --network=host -v $(PWD)/..:/home -w $(WORK_DIR) $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) rm -rf build/scratch_image/tmp/*
+	@docker run --name build-env --rm -v $(PWD)/..:/home -w $(WORK_DIR) $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) rm -rf build/scratch_image/tmp/*
 
 .PHONY: release-image-file
 release-image-file: release-image
@@ -97,14 +97,10 @@ push-image:
 
 .PHONY: start
 start:
-	@go env -w GOPROXY=$(GO_PROXY)
-	@go env -w GOSUMDB="off"
 	@go run main.go -c etc/app-playground-service.yaml serve
 
 .PHONY: start-scheduler
 start-scheduler:
-	@go env -w GOPROXY=$(GO_PROXY)
-	@go env -w GOSUMDB="off"
 	@go run main.go -c etc/app-playground-service.yaml -s etc/aps-scheduler.yaml scheduler start
 
 .PHONY: init

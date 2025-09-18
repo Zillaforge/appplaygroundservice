@@ -13,11 +13,11 @@ import (
 	"syscall"
 
 	"go.uber.org/zap"
-	aps "pegasus-cloud.com/aes/appplaygroundserviceclient/aps"
-	"pegasus-cloud.com/aes/meteringtoolkits/metering"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/mviper"
-	"pegasus-cloud.com/aes/toolkits/tracer"
+	aps "github.com/Zillaforge/appplaygroundserviceclient/aps"
+	"github.com/Zillaforge/meteringtoolkits/metering"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/tracer"
 )
 
 func RunScheduler() {

@@ -9,10 +9,10 @@ import (
 	"go.uber.org/zap"
 	"golang.org/x/exp/slices"
 
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/mviper"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
 )
 
 type VerifyNamespaceInput struct {

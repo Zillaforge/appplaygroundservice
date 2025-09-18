@@ -12,10 +12,10 @@ import (
 	"text/template"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/aps"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	"github.com/Zillaforge/appplaygroundserviceclient/aps"
+	"github.com/Zillaforge/appplaygroundserviceclient/pb"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
 )
 
 func (p *TerraformProvider) Deploy(ctx context.Context, input common.DeployInput) (output common.DeployOutput, err error) {

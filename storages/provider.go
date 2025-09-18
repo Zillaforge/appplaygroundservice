@@ -7,7 +7,7 @@ import (
 	"AppPlaygroundService/storages/mariadb"
 	mariadbCom "AppPlaygroundService/storages/mariadb/common"
 
-	"pegasus-cloud.com/aes/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/mviper"
 )
 
 const (

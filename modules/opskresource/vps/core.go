@@ -3,7 +3,7 @@ package vps
 import (
 	"AppPlaygroundService/services"
 
-	"pegasus-cloud.com/aes/virtualplatformserviceclient/vps"
+	"github.com/Zillaforge/virtualplatformserviceclient/vps"
 )
 
 var (

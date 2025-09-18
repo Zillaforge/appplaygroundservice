@@ -6,9 +6,9 @@ import (
 	"context"
 	"fmt"
 
-	"pegasus-cloud.com/aes/toolkits/flatten"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	"github.com/Zillaforge/toolkits/flatten"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
 )
 
 func (o *OpstkIdentity) GetOpstkUID(ctx context.Context, userID string) (opstkUID string, err error) {

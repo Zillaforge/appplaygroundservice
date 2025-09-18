@@ -7,8 +7,8 @@ import (
 	"reflect"
 
 	"go.uber.org/zap"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/mviper"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/mviper"
 )
 
 type Service struct {

@@ -4,8 +4,8 @@ import (
 	"AppPlaygroundService/utility"
 	"reflect"
 
-	vpsUtil "pegasus-cloud.com/aes/virtualplatformserviceclient/utility"
-	"pegasus-cloud.com/aes/virtualplatformserviceclient/vps"
+	vpsUtil "github.com/Zillaforge/virtualplatformserviceclient/utility"
+	"github.com/Zillaforge/virtualplatformserviceclient/vps"
 )
 
 type VPSInput struct {

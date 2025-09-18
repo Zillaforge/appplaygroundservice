@@ -11,11 +11,11 @@ import (
 	"fmt"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/aps"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
-	iamPB "pegasus-cloud.com/aes/pegasusiamclient/pb"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	"github.com/Zillaforge/appplaygroundserviceclient/aps"
+	"github.com/Zillaforge/appplaygroundserviceclient/pb"
+	iamPB "github.com/Zillaforge/pegasusiamclient/pb"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
 )
 
 func UnmarshalDeleteProject(input *ecCom.Data) (output *iamPB.ProjectID) {

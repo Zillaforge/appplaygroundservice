@@ -1,7 +1,7 @@
 services:
   pegasus-cloud-aps:
     profiles:
-      - ${APS_DISABLE:-}  
+      - ${APS_DISABLE:-}
     image: golang:1.22.4-alpine
     container_name: aps-server
     networks:
@@ -31,7 +31,7 @@ services:
   pegasus-cloud-aps-release:
     profiles:
       - ${APS_RELEASE_DISABLE:-}
-    image: ociscloud/app-playground-service:0.0.7
+    image: ${OWNER}/app-playground-service:0.0.7
     tty: true
     container_name: aps-server-release
     networks:

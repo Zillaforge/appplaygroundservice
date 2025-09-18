@@ -5,8 +5,8 @@ import (
 
 	// util "AppPlaygroundService/utility"
 
-	// "pegasus-cloud.com/aes/appplaygroundserviceclient/aps"
-	// "pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
+	// "github.com/Zillaforge/appplaygroundserviceclient/aps"
+	// "github.com/Zillaforge/appplaygroundserviceclient/pb"
 
 	"github.com/gin-gonic/gin"
 )

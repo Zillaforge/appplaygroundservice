@@ -4,8 +4,8 @@ import (
 	"AppPlaygroundService/utility"
 	"reflect"
 
-	"pegasus-cloud.com/aes/pegasusiamclient/iam"
-	iamUtil "pegasus-cloud.com/aes/pegasusiamclient/utility"
+	"github.com/Zillaforge/pegasusiamclient/iam"
+	iamUtil "github.com/Zillaforge/pegasusiamclient/utility"
 )
 
 type IAMInput struct {

@@ -1,7 +1,7 @@
 package opstkidentity
 
 import (
-	"pegasus-cloud.com/aes/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/mviper"
 )
 
 var instance *OpstkIdentity

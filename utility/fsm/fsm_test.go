@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/suite"
-	tests "pegasus-cloud.com/aes/toolkits/testing"
+	tests "github.com/Zillaforge/toolkits/testing"
 )
 
 const (

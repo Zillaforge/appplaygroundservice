@@ -12,7 +12,7 @@ import (
 	ctlProject "AppPlaygroundService/controllers/grpc/project"
 
 	"google.golang.org/grpc"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
+	"github.com/Zillaforge/appplaygroundserviceclient/pb"
 )
 
 func grpcRouters(srv *grpc.Server) {

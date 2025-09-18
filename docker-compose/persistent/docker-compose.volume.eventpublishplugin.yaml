@@ -1,7 +1,7 @@
 services: 
   pegauss-cloud-eventpublishplugin:
     container_name: eventpublishplugin
-    image: ociscloud/debugger:1.0.2
+    image: ${OWNER}/debugger:1.0.2
     volumes:
       - pegasus-cloud-eventpublishplugin:/mnt
     networks: 

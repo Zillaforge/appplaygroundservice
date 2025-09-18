@@ -33,7 +33,7 @@ services:
   pegasus-cloud-iamserver-release:
     profiles:
       - ${IAM_RELEASE_DISABLE:-}
-    image: ociscloud/iam:1.8.3
+    image: ${OWNER}/iam:1.8.3
     tty: true
     container_name: iam-server-release
     networks:

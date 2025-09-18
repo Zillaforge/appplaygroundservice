@@ -17,12 +17,12 @@ import (
 	"time"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/aps"
-	cCnt "pegasus-cloud.com/aes/appplaygroundserviceclient/constants"
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	"github.com/Zillaforge/appplaygroundserviceclient/aps"
+	cCnt "github.com/Zillaforge/appplaygroundserviceclient/constants"
+	"github.com/Zillaforge/appplaygroundserviceclient/pb"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
 )
 
 func (m *Method) DeleteApplication(ctx context.Context, input *pb.DeleteApplicationInput) (output *pb.DeleteOutput, err error) {

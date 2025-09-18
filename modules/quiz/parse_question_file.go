@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 
 	"gopkg.in/yaml.v3"
-	mviper "pegasus-cloud.com/aes/toolkits/mviper"
+	mviper "github.com/Zillaforge/toolkits/mviper"
 )
 
 const filepathTmpl string = "questions_strings_%s.yaml"

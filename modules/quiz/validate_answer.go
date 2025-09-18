@@ -10,7 +10,7 @@ import (
 	"os"
 
 	"golang.org/x/crypto/bcrypt"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
+	tkErr "github.com/Zillaforge/toolkits/errors"
 )
 
 type ValidateAnswerInput struct {

@@ -4,7 +4,7 @@ import (
 	"AppPlaygroundService/utility/fsm"
 	"context"
 
-	"pegasus-cloud.com/aes/appplaygroundserviceclient/pb"
+	"github.com/Zillaforge/appplaygroundserviceclient/pb"
 )
 
 func (h Handler) callBackEnterState() func(context.Context, *fsm.Event) {

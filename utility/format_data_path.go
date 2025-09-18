@@ -3,7 +3,7 @@ package utility
 import (
 	"path/filepath"
 
-	mviper "pegasus-cloud.com/aes/toolkits/mviper"
+	mviper "github.com/Zillaforge/toolkits/mviper"
 )
 
 // /<data_dir>/<module_pid>/aps/module/<module-id>/

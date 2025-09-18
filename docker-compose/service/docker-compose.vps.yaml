@@ -29,7 +29,7 @@ services:
   pegasus-cloud-vps-release:
     profiles:
       - ${VPS_RELEASE_DISABLE:-}
-    image: ociscloud/virtual-platform-service:0.3.3
+    image: ${OWNER}/virtual-platform-service:0.3.3
     tty: true
     container_name: vps-server-release
     networks:
