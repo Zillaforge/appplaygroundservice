@@ -93,9 +93,7 @@ services:
   - name: myiam
     kind: iam
     hosts: 
-      # - pegasus-cloud-iamserver:5051
-      # - pegasus-cloud-iamserver-release:5051
-      - 140.110.160.146:31051
+      - pegasus-cloud-iamserver-release:5051
     tls:
       enable: false
       cert_path: /root/server-csr/IAM.pem
@@ -109,7 +107,7 @@ services:
     master_group_name: mymaster
   - name: opstk
     kind: openstack
-    identity_endpoint: http://140.110.139.17:5000/v3
+    identity_endpoint: REPLACE_KEYSTONE_ENDPOINT
     username: test@trusted-cloud.nchc.org.tw
     password: password123
     domain_name: trustedcloud

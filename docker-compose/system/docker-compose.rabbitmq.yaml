@@ -2,7 +2,7 @@ services:
   pegasus-cloud-rabbitmq:
     profiles:
       - ${RABBITMQ_DISABLE:-}  
-    image: ociscloud/rabbitmq:3.10.25
+    image: bitnamilegacy/rabbitmq:3.10.25
     container_name: rabbitmq
     networks:
       pegasus-cloud-network:

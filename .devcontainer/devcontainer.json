@@ -51,6 +51,12 @@
 			}
 		}
 	},
+	"features": {
+		"ghcr.io/cirolosapio/devcontainers-features/alpine-docker-outside-of-docker:0": {}
+	},
+	"remoteEnv": {
+		"HOST_PROJECT_PATH": "${localWorkspaceFolder}"
+	},
 	"mounts": [
 		{
 			"source": "vscocde-golang-devcontainer",

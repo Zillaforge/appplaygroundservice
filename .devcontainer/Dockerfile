@@ -14,13 +14,13 @@ FROM golang:${GO_VER}-${GO_ARCH}
 
 
 # Install Golang extension package tools
-RUN go install github.com/ramya-rao-a/go-outline@latest         && \
-    go install github.com/cweill/gotests/gotests@latest         && \
-    go install github.com/fatih/gomodifytags@latest             && \
-    go install github.com/josharian/impl@latest                 && \
-    go install github.com/haya14busa/goplay/cmd/goplay@latest   && \
-    go install github.com/go-delve/delve/cmd/dlv@latest         && \
-    go install honnef.co/go/tools/cmd/staticcheck@v0.4.7        && \
+RUN go install github.com/ramya-rao-a/go-outline@v0.0.0-20210608161538-9736a4bde949    && \
+    go install github.com/cweill/gotests/gotests@v1.7.0                                && \
+    go install github.com/fatih/gomodifytags@v1.17.0                                   && \
+    go install github.com/josharian/impl@v1.4.0                                        && \
+    go install github.com/haya14busa/goplay/cmd/goplay@v1.0.0                          && \
+    go install github.com/go-delve/delve/cmd/dlv@v1.25.2                               && \
+    go install honnef.co/go/tools/cmd/staticcheck@v0.4.7                               && \
     go install golang.org/x/tools/gopls@v0.15.3
 
 ARG GO_ARCH
@@ -60,28 +60,19 @@ RUN if [ "${INSTALL_KUBECTL}" == "true" ]; then \
         export OS=$(uname | awk '{print tolower($0)}')                                  && \
         curl -LO "https://dl.k8s.io/release/v${KUBECTL_VER}/bin/${OS}/${ARCH}/kubectl"  && \
         chmod +x kubectl && mv kubectl /usr/local/bin/kubectl                           && \
-        echo 'source <(kubectl completion bash)'                    >> /root/.bashrc    && \
-        echo 'alias k=kubectl'                                      >> /root/.bashrc    && \
-        echo 'complete -o default -F __start_kubectl k'             >> /root/.bashrc    && \
-        git -C /opt clone https://github.com/jonmosco/kube-ps1.git                      && \
-        echo 'source /opt/kube-ps1/kube-ps1.sh'                     >> /root/.bashrc    && \
-        echo "PS1='[\u@\h \W \$(kube_ps1)]\$ '"                     >> /root/.bashrc    && \
-        echo "KUBE_PS1_SYMBOL_COLOR=''"                             >> /root/.bashrc    && \
-        echo "KUBE_PS1_CTX_COLOR=''"                                >> /root/.bashrc    && \
-        echo "KUBE_PS1_NS_COLOR=''"                                 >> /root/.bashrc    && \
-        echo "KUBE_PS1_SYMBOL_ENABLE='false'"                       >> /root/.bashrc    && \
-        echo "KUBE_PS1_ENABLED='off'"                               >> /root/.bashrc    && \
+        echo 'source <(kubectl completion zsh)'                    >> /root/.zshrc    && \
+        echo 'alias k=kubectl'                                      >> /root/.zshrc    && \
+        echo 'complete -o default -F __start_kubectl k'             >> /root/.zshrc    && \
         cd "$(mktemp -d)"                                           && \
         KREW="krew-${OS}_${ARCH}"                                   && \
         curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" && \
         tar zxvf "${KREW}.tar.gz"                                   && \
-        echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"'    >> /root/.bashrc    && \
+        echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"'    >> /root/.zshrc    && \
         ./"${KREW}" install krew                                    && \
         ./"${KREW}" install ctx                                     && \
         ./"${KREW}" install ns                                      && \
         ./"${KREW}" install neat                                    ;\
     fi
-
 
 ARG INSTALL_KUBEBUILDER
 ARG KUBEBUILDER_VER

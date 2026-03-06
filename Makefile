@@ -8,7 +8,8 @@ OS ?= ubuntu
 ARCH ?= $(shell uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')
 PREVERSION ?= 0.0.7
 VERSION ?= $(shell cat VERSION)
-PWD := $(shell pwd)
+LOCAL_PWD := $(shell pwd)
+HOST_PWD := $(or $(HOST_PROJECT_PATH),$(LOCAL_PWD))
 # GO_PROXY ?= "https://proxy.golang.org,http://proxy.pegasus-cloud.com:8078"
 
 # Release Mode could be dev or prod,
@@ -46,11 +47,11 @@ endif
 .PHONY: set-version
 set-version:
 	@echo "Set Version: $(RELEASE_VERSION)"
-	@$(sed) -e'/$(PREVERSION)/{s//$(RELEASE_VERSION)/;:b' -e'n;bb' -e\} $(PWD)/build/$(PROJECT).spec
-	@$(sed) -e'/$(PREVERSION)/{s//$(RELEASE_VERSION)/;:b' -e'n;bb' -e\} $(PWD)/constants/common.go
-	@$(sed) -e'/$(PREVERSION)/{s//$(RELEASE_VERSION)/;:b' -e'n;bb' -e\} $(PWD)/etc/app-playground-service.yaml
-	@$(sed) -e'/$(PREVERSION)/{s//$(RELEASE_VERSION)/;:b' -e'n;bb' -e\} $(PWD)/etc/aps-scheduler.yaml
-	@$(sed) -e'/$(PREVERSION)/{s//$(RELEASE_VERSION)/;:b' -e'n;bb' -e\} $(PWD)/Makefile
+	@$(sed) -e'/$(PREVERSION)/{s//$(RELEASE_VERSION)/;:b' -e'n;bb' -e\} $(LOCAL_PWD)/build/$(PROJECT).spec
+	@$(sed) -e'/$(PREVERSION)/{s//$(RELEASE_VERSION)/;:b' -e'n;bb' -e\} $(LOCAL_PWD)/constants/common.go
+	@$(sed) -e'/$(PREVERSION)/{s//$(RELEASE_VERSION)/;:b' -e'n;bb' -e\} $(LOCAL_PWD)/etc/app-playground-service.yaml
+	@$(sed) -e'/$(PREVERSION)/{s//$(RELEASE_VERSION)/;:b' -e'n;bb' -e\} $(LOCAL_PWD)/etc/aps-scheduler.yaml
+	@$(sed) -e'/$(PREVERSION)/{s//$(RELEASE_VERSION)/;:b' -e'n;bb' -e\} $(LOCAL_PWD)/Makefile
 
 .PHONY: build-container
 build-container:
@@ -65,7 +66,7 @@ release:
 	@mkdir -p tmp
 	@rm -rf tmp/$(OS)
 	@docker rm -f build-env
-	@docker run --name build-env --rm -v $(PWD)/..:/home -w $(WORK_DIR) $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make OS=$(OS) build
+	@docker run --name build-env --rm -v $(HOST_PWD):$(WORK_DIR) -w $(WORK_DIR) $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make OS=$(OS) build
 	@mkdir tmp/$(OS)
 	@mv tmp/$(PROJECT)* tmp/$(OS)
 
@@ -74,10 +75,10 @@ release-image:
 	@make set-version
 	@mkdir -p build/scratch_image/tmp
 	@docker rm -f build-env
-	@docker run --name build-env --rm -v $(PWD)/..:/home -w $(WORK_DIR) $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make build-container
+	@docker run --name build-env --rm -v $(HOST_PWD):$(WORK_DIR) -w $(WORK_DIR) $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make build-container
 	@docker rmi -f $(OWNER)/$(IMAGE_NAME):$(RELEASE_VERSION)
 	@docker build -t $(OWNER)/$(IMAGE_NAME):$(RELEASE_VERSION) build/scratch_image/
-	@docker run --name build-env --rm -v $(PWD)/..:/home -w $(WORK_DIR) $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) rm -rf build/scratch_image/tmp/*
+	@docker run --name build-env --rm -v $(HOST_PWD):$(WORK_DIR) -w $(WORK_DIR) $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) rm -rf build/scratch_image/tmp/*
 
 .PHONY: release-image-file
 release-image-file: release-image
